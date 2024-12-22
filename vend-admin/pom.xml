@@ -60,6 +60,12 @@
             <groupId>oasis.vend</groupId>
             <artifactId>vend-generator</artifactId>
         </dependency>
+        
+        <!--vend manage-->
+        <dependency>
+            <groupId>oasis.vend</groupId>
+            <artifactId>vend-manage</artifactId>
+        </dependency>
 
     </dependencies>
 
