@@ -2,6 +2,7 @@ package oasis.vend.manage.mapper;
 
 import java.util.List;
 import oasis.vend.manage.domain.Region;
+import oasis.vend.manage.domain.custom.RegionCustom;
 
 /**
  * regionMapper接口
@@ -58,4 +59,11 @@ public interface RegionMapper
      * @return 结果
      */
     public int deleteRegionByIds(Long[] ids);
+    
+	/**
+	 * query RegionCustom list	
+	 * 
+	 * @return region列表
+	 */
+    public List<RegionCustom> selectRegionCustomList(Region region);
 }

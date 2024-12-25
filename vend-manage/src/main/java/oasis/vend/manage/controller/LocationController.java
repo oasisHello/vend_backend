@@ -29,76 +29,69 @@ import oasis.vend.common.core.page.TableDataInfo;
  */
 @RestController
 @RequestMapping("/manage/location")
-public class LocationController extends BaseController
-{
-    @Autowired
-    private ILocationService locationService;
+public class LocationController extends BaseController {
+	@Autowired
+	private ILocationService locationService;
 
-    /**
-     * 查询location列表
-     */
-    @PreAuthorize("@ss.hasPermi('manage:location:list')")
-    @GetMapping("/list")
-    public TableDataInfo list(Location location)
-    {
-        startPage();
-        List<Location> list = locationService.selectLocationList(location);
-        return getDataTable(list);
-    }
+	/**
+	 * 查询location列表
+	 */
+	@PreAuthorize("@ss.hasPermi('manage:location:list')")
+	@GetMapping("/list")
+	public TableDataInfo list(Location location) {
+		startPage();
+		List<Location> list = locationService.selectLocationList(location);
+		return getDataTable(list);
+	}
 
-    /**
-     * 导出location列表
-     */
-    @PreAuthorize("@ss.hasPermi('manage:location:export')")
-    @Log(title = "location", businessType = BusinessType.EXPORT)
-    @PostMapping("/export")
-    public void export(HttpServletResponse response, Location location)
-    {
-        List<Location> list = locationService.selectLocationList(location);
-        ExcelUtil<Location> util = new ExcelUtil<Location>(Location.class);
-        util.exportExcel(response, list, "location数据");
-    }
+	/**
+	 * 导出location列表
+	 */
+	@PreAuthorize("@ss.hasPermi('manage:location:export')")
+	@Log(title = "location", businessType = BusinessType.EXPORT)
+	@PostMapping("/export")
+	public void export(HttpServletResponse response, Location location) {
+		List<Location> list = locationService.selectLocationList(location);
+		ExcelUtil<Location> util = new ExcelUtil<Location>(Location.class);
+		util.exportExcel(response, list, "location数据");
+	}
 
-    /**
-     * 获取location详细信息
-     */
-    @PreAuthorize("@ss.hasPermi('manage:location:query')")
-    @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
-    {
-        return success(locationService.selectLocationById(id));
-    }
+	/**
+	 * 获取location详细信息
+	 */
+	@PreAuthorize("@ss.hasPermi('manage:location:query')")
+	@GetMapping(value = "/{id}")
+	public AjaxResult getInfo(@PathVariable("id") Long id) {
+		return success(locationService.selectLocationById(id));
+	}
 
-    /**
-     * 新增location
-     */
-    @PreAuthorize("@ss.hasPermi('manage:location:add')")
-    @Log(title = "location", businessType = BusinessType.INSERT)
-    @PostMapping
-    public AjaxResult add(@RequestBody Location location)
-    {
-        return toAjax(locationService.insertLocation(location));
-    }
+	/**
+	 * 新增location
+	 */
+	@PreAuthorize("@ss.hasPermi('manage:location:add')")
+	@Log(title = "location", businessType = BusinessType.INSERT)
+	@PostMapping
+	public AjaxResult add(@RequestBody Location location) {
+		return toAjax(locationService.insertLocation(location));
+	}
 
-    /**
-     * 修改location
-     */
-    @PreAuthorize("@ss.hasPermi('manage:location:edit')")
-    @Log(title = "location", businessType = BusinessType.UPDATE)
-    @PutMapping
-    public AjaxResult edit(@RequestBody Location location)
-    {
-        return toAjax(locationService.updateLocation(location));
-    }
+	/**
+	 * 修改location
+	 */
+	@PreAuthorize("@ss.hasPermi('manage:location:edit')")
+	@Log(title = "location", businessType = BusinessType.UPDATE)
+	@PutMapping
+	public AjaxResult edit(@RequestBody Location location) {
+		return toAjax(locationService.updateLocation(location));
+	}
 
-    /**
-     * 删除location
-     */
-    @PreAuthorize("@ss.hasPermi('manage:location:remove')")
-    @Log(title = "location", businessType = BusinessType.DELETE)
+	/**
+	 * 删除location
+	 */
+	@PreAuthorize("@ss.hasPermi('manage:location:remove')")
+	@Log(title = "location", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
-    {
-        return toAjax(locationService.deleteLocationByIds(ids));
-    }
+	public AjaxResult remove(@PathVariable Long[] ids) {
+		return toAjax(locationService.deleteLocationByIds(ids));
+	}
 }

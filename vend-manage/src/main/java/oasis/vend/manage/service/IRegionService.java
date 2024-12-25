@@ -2,6 +2,7 @@ package oasis.vend.manage.service;
 
 import java.util.List;
 import oasis.vend.manage.domain.Region;
+import oasis.vend.manage.domain.custom.RegionCustom;
 
 /**
  * regionService接口
@@ -58,4 +59,12 @@ public interface IRegionService
      * @return 结果
      */
     public int deleteRegionById(Long id);
+    
+	/**
+	 * 查询RegionCustom列表
+	 * 
+	 * @param region region
+	 * @return regionCustom集合
+	 */
+    public List<RegionCustom> selectRegionCustomList(Region region);
 }

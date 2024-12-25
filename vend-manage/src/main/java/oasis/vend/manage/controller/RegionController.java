@@ -1,14 +1,16 @@
 package oasis.vend.manage.controller;
 
 import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +19,7 @@ import oasis.vend.common.core.controller.BaseController;
 import oasis.vend.common.core.domain.AjaxResult;
 import oasis.vend.common.enums.BusinessType;
 import oasis.vend.manage.domain.Region;
+import oasis.vend.manage.domain.custom.RegionCustom;
 import oasis.vend.manage.service.IRegionService;
 import oasis.vend.common.utils.poi.ExcelUtil;
 import oasis.vend.common.core.page.TableDataInfo;
@@ -41,8 +44,9 @@ public class RegionController extends BaseController
     @GetMapping("/list")
     public TableDataInfo list(Region region)
     {
-        startPage();
-        List<Region> list = regionService.selectRegionList(region);
+        startPage();// configure pagination parameters（pageNum, pageSize, orderBy） using PageHelper.
+        			// to ensure selectRegionList() is executed in a paginated manner
+        List<RegionCustom> list = regionService.selectRegionCustomList(region);
         return getDataTable(list);
     }
 

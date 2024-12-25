@@ -5,13 +5,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="oasis.vend.manage.mapper.RegionMapper">
     
     <resultMap type="Region" id="RegionResult">
-        <result property="id"    column="id"    />
-        <result property="name"    column="name"    />
-        <result property="createdTime"    column="created_time"    />
-        <result property="modifiedTime"    column="modified_time"    />
-        <result property="remark"    column="remark"    />
-        <result property="createdBy"    column="created_by"    />
-        <result property="modifiedBy"    column="modified_by"    />
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="createdTime" column="created_time" />
+		<result property="modifiedTime" column="modified_time" />
+		<result property="remark" column="remark" />
+		<result property="createdBy" column="created_by" />
+		<result property="modifiedBy" column="modified_by" />
     </resultMap>
 
     <sql id="selectRegionVo">
@@ -19,14 +19,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
 
     <select id="selectRegionList" parameterType="Region" resultMap="RegionResult">
-        <include refid="selectRegionVo"/>
+		<include refid="selectRegionVo" />
         <where>  
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
         </where>
     </select>
     
     <select id="selectRegionById" parameterType="Long" resultMap="RegionResult">
-        <include refid="selectRegionVo"/>
+		<include refid="selectRegionVo" />
         where id = #{id}
     </select>
 
@@ -75,4 +75,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+	<select id="selectRegionCustomList"
+		resultType="oasis.vend.manage.domain.custom.RegionCustom">
+		SELECT r.*,
+		       COUNT(l.id) AS location_count
+		FROM region r
+		LEFT JOIN location l ON r.id = l.region_id
+		GROUP BY r.id
+		<where>  
+            <if test="name != null  and name != ''"> and r.name like concat('%', #{name}, '%')</if>
+        </where>
+	</select>
+	
 </mapper>
