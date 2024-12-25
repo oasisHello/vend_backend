@@ -82,10 +82,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		       COUNT(l.id) AS location_count
 		FROM region r
 		LEFT JOIN location l ON r.id = l.region_id
-		GROUP BY r.id
 		<where>  
             <if test="name != null  and name != ''"> and r.name like concat('%', #{name}, '%')</if>
         </where>
+        GROUP BY r.id
 	</select>
 	
 </mapper>

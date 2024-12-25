@@ -45,7 +45,7 @@ public class RegionController extends BaseController
     public TableDataInfo list(Region region)
     {
         startPage();// configure pagination parameters（pageNum, pageSize, orderBy） using PageHelper.
-        			// to ensure selectRegionList() is executed in a paginated manner
+        			// to ensure selectRegionList() is executed in a paginated manner.
         List<RegionCustom> list = regionService.selectRegionCustomList(region);
         return getDataTable(list);
     }

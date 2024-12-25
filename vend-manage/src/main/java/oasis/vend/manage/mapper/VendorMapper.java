@@ -1,7 +1,9 @@
 package oasis.vend.manage.mapper;
 
+import java.lang.foreign.AddressLayout;
 import java.util.List;
 import oasis.vend.manage.domain.Vendor;
+import oasis.vend.manage.domain.custom.VendorCustom;
 
 /**
  * vendorMapper接口
@@ -58,4 +60,12 @@ public interface VendorMapper
      * @return 结果
      */
     public int deleteVendorByIds(Long[] ids);
+    
+	/**
+	 * 查询VendorCustom列表
+	 * 
+	 * @param VendorCustom VendorCustom
+	 * @return VendorCustom集合
+	 */
+    public List<VendorCustom> selectVendorCustomList(Vendor v);
 }

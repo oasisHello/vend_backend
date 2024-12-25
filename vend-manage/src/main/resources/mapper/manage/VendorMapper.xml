@@ -95,4 +95,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+    <select id="selectVendorCustomList"
+		resultType="oasis.vend.manage.domain.custom.VendorCustom">
+		SELECT v.*,
+		       COUNT(l.id) AS location_count
+		FROM vendor v
+		LEFT JOIN location l ON v.id = l.vendor_id
+		<where>  
+            <if test="name != null  and name != ''"> and v.name like concat('%', #{name}, '%')</if>
+        </where>
+        GROUP BY v.id
+	</select>
 </mapper>

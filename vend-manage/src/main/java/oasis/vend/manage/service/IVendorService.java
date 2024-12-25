@@ -2,6 +2,7 @@ package oasis.vend.manage.service;
 
 import java.util.List;
 import oasis.vend.manage.domain.Vendor;
+import oasis.vend.manage.domain.custom.VendorCustom;
 
 /**
  * vendorService接口
@@ -58,4 +59,12 @@ public interface IVendorService
      * @return 结果
      */
     public int deleteVendorById(Long id);
+    
+	/**
+	 * 查询vendor列表
+	 * 
+	 * @param vendorCustom vendor
+	 * @return vendor集合
+	 */
+    public List<VendorCustom>	selectVendorCustomList(Vendor v);
 }

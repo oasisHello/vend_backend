@@ -3,6 +3,7 @@ package oasis.vend.manage.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,9 @@ import oasis.vend.common.core.controller.BaseController;
 import oasis.vend.common.core.domain.AjaxResult;
 import oasis.vend.common.enums.BusinessType;
 import oasis.vend.manage.domain.Vendor;
+import oasis.vend.manage.domain.custom.VendorCustom;
 import oasis.vend.manage.service.IVendorService;
+import oasis.vend.common.utils.SecurityUtils;
 import oasis.vend.common.utils.poi.ExcelUtil;
 import oasis.vend.common.core.page.TableDataInfo;
 
@@ -42,7 +45,7 @@ public class VendorController extends BaseController
     public TableDataInfo list(Vendor vendor)
     {
         startPage();
-        List<Vendor> list = vendorService.selectVendorList(vendor);
+        List<VendorCustom> list = vendorService.selectVendorCustomList(vendor);
         return getDataTable(list);
     }
 
@@ -101,4 +104,14 @@ public class VendorController extends BaseController
     {
         return toAjax(vendorService.deleteVendorByIds(ids));
     }
+    @PreAuthorize("@ss.hasPermi('manage:vendor:edit')")
+    @Log(title = "vendor", businessType = BusinessType.UPDATE)
+    @PutMapping("resetPwd/{id}")
+	public AjaxResult resetPwd(@PathVariable Long id) {
+		Vendor vendor = new Vendor();
+		vendor.setId(id);
+		vendor.setPassword(SecurityUtils.encryptPassword("123456"));
+		
+		return toAjax(vendorService.updateVendor(vendor));// what does the Ajax meaning here ?
+	}
 }

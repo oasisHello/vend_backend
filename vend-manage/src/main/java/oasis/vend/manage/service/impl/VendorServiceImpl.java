@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import oasis.vend.manage.mapper.VendorMapper;
 import oasis.vend.manage.domain.Vendor;
+import oasis.vend.manage.domain.custom.VendorCustom;
 import oasis.vend.manage.service.IVendorService;
 
 /**
@@ -90,4 +91,16 @@ public class VendorServiceImpl implements IVendorService
     {
         return vendorMapper.deleteVendorById(id);
     }
+
+	/**
+	 * 查询vendor列表
+	 * 
+	 * @param vendorCustom v
+	 * @return vendor集合
+	 */
+	@Override
+	public List<VendorCustom> selectVendorCustomList(Vendor v) {
+
+		return vendorMapper.selectVendorCustomList(v);
+	}
 }
