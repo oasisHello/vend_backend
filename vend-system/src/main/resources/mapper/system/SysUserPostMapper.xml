@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+"/Users/oasis/code/vend_backend/vend-admin/src/main/resources/mybatis/mybatis-3-mapper.dtd">
 <mapper namespace="oasis.vend.system.mapper.SysUserPostMapper">
 
 	<resultMap type="SysUserPost" id="SysUserPostResult">
