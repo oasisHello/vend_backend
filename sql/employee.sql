@@ -46,3 +46,73 @@ VALUES
 (3, 'Asia'),            -- Asia
 (4, 'Africa'),          -- Africa
 (5, 'South America');   -- South America
+
+DROP TABLE IF EXISTS tb_aisle;
+DROP TABLE IF EXISTS tb_vending_machine;
+DROP TABLE IF EXISTS tb_vm_type;
+DROP TABLE IF EXISTS tb_node;
+
+CREATE TABLE tb_node (
+    id INT PRIMARY KEY COMMENT 'Node ID',
+    node_name VARCHAR(255) NOT NULL COMMENT 'Node Name',
+    address VARCHAR(255) COMMENT 'Address',
+    business_type INT COMMENT 'Business Type',
+    region_id INT COMMENT 'Region ID',
+    partner_id INT COMMENT 'Partner ID',
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created Time',
+    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated Time',
+    create_by VARCHAR(64) COMMENT 'Created By',
+    update_by VARCHAR(64) COMMENT 'Updated By',
+    remark TEXT COMMENT 'Remark'
+) COMMENT = 'Node Information';
+
+CREATE TABLE tb_vm_type (
+    id INT PRIMARY KEY COMMENT 'Type ID',
+    name VARCHAR(15) NOT NULL COMMENT 'Type Name',
+    model VARCHAR(20) COMMENT 'Model',
+    image VARCHAR(50) COMMENT 'Image',
+    vm_row INT COMMENT 'Rows',
+    vm_col INT COMMENT 'Columns',
+    aisle_max_capacity INT COMMENT 'Max Capacity'
+) COMMENT = 'Vending Machine Types';
+
+CREATE TABLE tb_vending_machine (
+    id BIGINT PRIMARY KEY COMMENT 'Machine ID',
+    inner_code VARCHAR(15) NOT NULL COMMENT 'Inner Code',
+    aisle_max_capacity INT COMMENT 'Max Capacity',
+    node_id INT COMMENT 'Node ID',
+    addr VARCHAR(100) COMMENT 'Address',
+    last_supply_time DATETIME COMMENT 'Last Supply Time',
+    business_type INT COMMENT 'Business Type',
+    region_id INT COMMENT 'Region ID',
+    partner_id INT COMMENT 'Partner ID',
+    vm_type_id INT COMMENT 'Type ID',
+    vm_status VARCHAR(100) COMMENT 'Machine Status',
+    running_status VARCHAR(100) COMMENT 'Running Status',
+    longitude DOUBLE COMMENT 'Longitude',
+    latitude DOUBLE COMMENT 'Latitude',
+    client_id BIGINT COMMENT 'Client ID',
+    policy_id BIGINT COMMENT 'Policy ID',
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created Time',
+    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated Time',
+    FOREIGN KEY (node_id) REFERENCES tb_node(id),
+    FOREIGN KEY (vm_type_id) REFERENCES tb_vm_type(id)
+) COMMENT = 'Vending Machine Information';
+
+CREATE TABLE tb_aisle (
+    id BIGINT PRIMARY KEY COMMENT 'Channel ID',
+    aisle_code VARCHAR(10) NOT NULL COMMENT 'Channel Code',
+    sku_id BIGINT COMMENT 'SKU ID',
+    vm_id BIGINT COMMENT 'Machine ID',
+    inner_code VARCHAR(15) COMMENT 'Inner Code',
+    max_capacity INT COMMENT 'Max Capacity',
+    current_capacity INT COMMENT 'Current Capacity',
+    last_supply_time DATETIME COMMENT 'Last Supply Time',
+    create_time DATETIME COMMENT 'Created Time',
+    update_time DATETIME COMMENT 'Updated Time',
+    FOREIGN KEY (vm_id) REFERENCES tb_vending_machine(id)
+) COMMENT = 'Channel Information';
+
+ALTER TABLE tb_vm_type modify COLUMN image VARCHAR(255) COMMENT 'Image';
+ALTER TABLE tb_vm_type MODIFY COLUMN id INT NOT NULL AUTO_INCREMENT;
+ALTER TABLE tb_vm_type modify COLUMN name VARCHAR(50) NOT NULL COMMENT 'Name'
