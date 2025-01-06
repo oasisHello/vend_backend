@@ -7,7 +7,7 @@ ruoyi:
   # 版权年份
   copyrightYear: 2024
   # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
-  profile: D:/ruoyi/uploadPath
+  profile: C:\Users\oasis\code\vend_backend\upload
   # 获取ip地址开关
   addressEnabled: false
   # 验证码类型 math 数字计算 char 字符验证
@@ -127,3 +127,18 @@ xss:
   excludes: /system/notice
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
+
+dromara:
+  x-file-storage: #
+    default-platform: amazon-s3-1 # default storage cloud
+    thumbnail-suffix: ".min.jpg" #缩略图后缀，例如【.min.jpg】【.png】 #对应平台的配置写在这里，注意缩进要对齐
+    amazon-s3: # 0.0.7 及以前的版本，配置名称是：aws-s3
+      platform: amazon-s3-1 # 存储平台标识
+      enable-storage: true  # 启用存储
+      access-key: ${AWS_ACCESS_KEY_ID} # Reads from system environment variables
+      secret-key: ${AWS_SECRET_ACCESS_KEY}
+      region: ap-southeast-2  # Asia Pacific (Sydney)
+      end-point:
+      bucket-name: oasis-cloud
+      domain: https://oasis-cloud.s3.ap-southeast-2.amazonaws.com/ # URL, END UP With "/", e.g., https://abc.hn-bkt.clouddn.com/
+      base-path: s3/ # 基础路径
