@@ -1,9 +1,14 @@
 package oasis.vend.web.controller.common;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.dromara.x.file.storage.core.FileInfo;
+import org.dromara.x.file.storage.core.FileStorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +39,8 @@ public class CommonController
 
     @Autowired
     private ServerConfig serverConfig;
+    @Autowired
+    private FileStorageService fileStorageService;
 
     private static final String FILE_DELIMETER = ",";
 
@@ -77,15 +84,15 @@ public class CommonController
     {
         try
         {
-            // 上传文件路径
-            String filePath = RuoYiConfig.getUploadPath();
-            // 上传并返回新文件名称
-            String fileName = FileUploadUtils.upload(filePath, file);
-            String url = serverConfig.getUrl() + fileName;
+            // Uploading Path
+        	String objectPath= LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"))+"/";
+        	FileInfo fileInfo = fileStorageService.of(file)
+                    .setPath(objectPath)
+                    .upload();
             AjaxResult ajax = AjaxResult.success();
-            ajax.put("url", url);
-            ajax.put("fileName", fileName);
-            ajax.put("newFileName", FileUtils.getName(fileName));
+            ajax.put("url", fileInfo.getUrl());
+            ajax.put("fileName", fileInfo.getUrl());
+            ajax.put("newFileName", FileUtils.getName(fileInfo.getUrl()));
             ajax.put("originalFilename", file.getOriginalFilename());
             return ajax;
         }

@@ -79,3 +79,15 @@ VALUES
 (1, 'Operator 1', '2024-12-01 10:00:00', '2024-12-01 10:00:00', 'First operator', 'admin', 'admin'),
 (2, 'Operator 2', '2024-12-01 10:00:00', '2024-12-01 10:00:00', 'Second operator', 'admin', 'admin');
 
+
+
+-- region customzation
+SELECT r.id AS num,
+       r.name AS region_name,
+       COUNT(l.id) AS location_count
+FROM region r
+LEFT JOIN LOCATION l ON r.id = l.region_id
+GROUP BY r.id
+ORDER BY r.id;
+
+SELECT * FROM location
