@@ -58,4 +58,12 @@ public interface IAisleService
      * @return 结果
      */
     public int deleteAisleById(Long id);
+    
+	/**
+	 * insert aisle in a batch way
+	 * 
+	 * @param aisle Aisle Information
+	 * @return 结果
+	 */
+     public void insertAisleBatch(List<Aisle> aisle);
 }

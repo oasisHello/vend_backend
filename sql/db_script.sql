@@ -1,4 +1,4 @@
--- Location Module
+vending_machinevending_machine-- Location Module
 
 
 -- Region Table
@@ -167,9 +167,8 @@ CREATE TABLE aisle (
 ) COMMENT = 'Aisle Information';
 
 
-
-
-
+ALTER TABLE vending_machine 
+MODIFY COLUMN vm_status int COMMENT 'Machine Status';
 
 
 

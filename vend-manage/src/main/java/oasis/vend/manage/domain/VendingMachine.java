@@ -53,7 +53,7 @@ public class VendingMachine extends BaseEntity
 
     /** Machine Status */
     @Excel(name = "Machine Status")
-    private String vmStatus;
+    private Long vmStatus;
 
     /** Running Status */
     private String runningStatus;
@@ -160,12 +160,12 @@ public class VendingMachine extends BaseEntity
     {
         return vmTypeId;
     }
-    public void setVmStatus(String vmStatus) 
+    public void setVmStatus(Long vmStatus) 
     {
         this.vmStatus = vmStatus;
     }
 
-    public String getVmStatus() 
+    public Long getVmStatus() 
     {
         return vmStatus;
     }

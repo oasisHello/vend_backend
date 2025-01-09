@@ -58,4 +58,13 @@ public interface AisleMapper
      * @return 结果
      */
     public int deleteAisleByIds(Long[] ids);
+    
+	/**
+	 * 批量新增Aisle Information
+	 * 
+	 * @param aisles Aisle Information列表
+	 * @return 结果
+	 */
+	public void insertAisleBatch(List<Aisle> aisles);
+
 }

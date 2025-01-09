@@ -29,7 +29,7 @@ public class Location extends BaseEntity
     private String address;
 
     /** address */
-    @Excel(name = "address")
+    @Excel(name = "business_area")
     private Long businessArea;
 
     /** region_id */
