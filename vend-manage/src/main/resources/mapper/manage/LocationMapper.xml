@@ -1,94 +1,94 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="oasis.vend.manage.mapper.LocationMapper">
-    
-    <resultMap type="Location" id="LocationResult">
-        <result property="id"    column="id"    />
-        <result property="name"    column="name"    />
-        <result property="address"    column="address"    />
-        <result property="businessArea"    column="business_area"    />
-        <result property="regionId"    column="region_id"    />
-        <result property="vendorId"    column="vendor_id"    />
-        <result property="createdTime"    column="created_time"    />
-        <result property="modifiedTime"    column="modified_time"    />
-        <result property="remark"    column="remark"    />
-        <result property="createdBy"    column="created_by"    />
-        <result property="modifiedBy"    column="modified_by"    />
-    </resultMap>
 
-    <sql id="selectLocationVo">
-        select id, name, address, business_area, region_id, vendor_id, created_time, modified_time, remark, created_by, modified_by from location
-    </sql>
+	<resultMap type="Location" id="LocationResult">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="address" column="address" />
+		<result property="businessArea" column="business_area" />
+		<result property="regionId" column="region_id" />
+		<result property="vendorId" column="vendor_id" />
+		<result property="createdTime" column="created_time" />
+		<result property="modifiedTime" column="modified_time" />
+		<result property="remark" column="remark" />
+		<result property="createdBy" column="created_by" />
+		<result property="modifiedBy" column="modified_by" />
+	</resultMap>
 
-    <select id="selectLocationList" parameterType="Location" resultMap="LocationResult">
-        <include refid="selectLocationVo"/>
-        <where>  
-            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="regionId != null "> and region_id = #{regionId}</if>
-            <if test="vendorId != null "> and vendor_id = #{vendorId}</if>
-        </where>
-    </select>
-    
-    <select id="selectLocationById" parameterType="Long" resultMap="LocationResult">
-        <include refid="selectLocationVo"/>
-        where id = #{id}
-    </select>
+	<sql id="selectLocationVo">
+		select id, name, address, business_area, region_id, vendor_id,
+		created_time, modified_time, remark, created_by, modified_by from
+		location
+	</sql>
 
-    <insert id="insertLocation" parameterType="Location" useGeneratedKeys="true" keyProperty="id">
-        insert into location
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="name != null and name != ''">name,</if>
-            <if test="address != null and address != ''">address,</if>
-            <if test="businessArea != null">business_area,</if>
-            <if test="regionId != null">region_id,</if>
-            <if test="vendorId != null">vendor_id,</if>
-            <if test="createdTime != null">created_time,</if>
-            <if test="modifiedTime != null">modified_time,</if>
-            <if test="remark != null">remark,</if>
-            <if test="createdBy != null">created_by,</if>
-            <if test="modifiedBy != null">modified_by,</if>
-         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="name != null and name != ''">#{name},</if>
-            <if test="address != null and address != ''">#{address},</if>
-            <if test="businessArea != null">#{businessArea},</if>
-            <if test="regionId != null">#{regionId},</if>
-            <if test="vendorId != null">#{vendorId},</if>
-            <if test="createdTime != null">#{createdTime},</if>
-            <if test="modifiedTime != null">#{modifiedTime},</if>
-            <if test="remark != null">#{remark},</if>
-            <if test="createdBy != null">#{createdBy},</if>
-            <if test="modifiedBy != null">#{modifiedBy},</if>
-         </trim>
-    </insert>
+	<select id="selectLocationList" parameterType="Location"
+		resultMap="LocationResult">
+		<include refid="selectLocationVo" />
+		<where>
+			<if test="name != null  and name != ''"> and name like concat('%',
+				#{name}, '%')</if>
+			<if test="regionId != null "> and region_id = #{regionId}</if>
+			<if test="vendorId != null "> and vendor_id = #{vendorId}</if>
+		</where>
+	</select>
 
-    <update id="updateLocation" parameterType="Location">
-        update location
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="name != null and name != ''">name = #{name},</if>
-            <if test="address != null and address != ''">address = #{address},</if>
-            <if test="businessArea != null">business_area = #{businessArea},</if>
-            <if test="regionId != null">region_id = #{regionId},</if>
-            <if test="vendorId != null">vendor_id = #{vendorId},</if>
-            <if test="createdTime != null">created_time = #{createdTime},</if>
-            <if test="modifiedTime != null">modified_time = #{modifiedTime},</if>
-            <if test="remark != null">remark = #{remark},</if>
-            <if test="createdBy != null">created_by = #{createdBy},</if>
-            <if test="modifiedBy != null">modified_by = #{modifiedBy},</if>
-        </trim>
-        where id = #{id}
-    </update>
+	<select id="selectLocationById" parameterType="Long"
+		resultMap="LocationResult">
+		<include refid="selectLocationVo" /> where id = #{id} </select>
 
-    <delete id="deleteLocationById" parameterType="Long">
-        delete from location where id = #{id}
-    </delete>
+	<insert id="insertLocation" parameterType="Location" useGeneratedKeys="true"
+		keyProperty="id"> insert into location <trim prefix="(" suffix=")"
+			suffixOverrides=",">
+			<if test="name != null and name != ''">name,</if>
+			<if test="address != null and address != ''">address,</if>
+			<if test="businessArea != null">business_area,</if>
+			<if test="regionId != null">region_id,</if>
+			<if test="vendorId != null">vendor_id,</if>
+			<if test="createdTime != null">created_time,</if>
+			<if test="modifiedTime != null">modified_time,</if>
+			<if test="remark != null">remark,</if>
+			<if test="createdBy != null">created_by,</if>
+			<if test="modifiedBy != null">modified_by,</if>
+		</trim>
+        <trim
+			prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null and name != ''">#{name},</if>
+			<if test="address != null and address != ''">#{address},</if>
+			<if test="businessArea != null">#{businessArea},</if>
+			<if test="regionId != null">#{regionId},</if>
+			<if test="vendorId != null">#{vendorId},</if>
+			<if test="createdTime != null">#{createdTime},</if>
+			<if test="modifiedTime != null">#{modifiedTime},</if>
+			<if test="remark != null">#{remark},</if>
+			<if test="createdBy != null">#{createdBy},</if>
+			<if test="modifiedBy != null">#{modifiedBy},</if>
+		</trim>
+	</insert>
 
-    <delete id="deleteLocationByIds" parameterType="String">
-        delete from location where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </delete>
+	<update id="updateLocation" parameterType="Location"> update location <trim
+			prefix="SET" suffixOverrides=",">
+			<if test="name != null and name != ''">name = #{name},</if>
+			<if test="address != null and address != ''">address = #{address},</if>
+			<if test="businessArea != null">business_area = #{businessArea},</if>
+			<if test="regionId != null">region_id = #{regionId},</if>
+			<if test="vendorId != null">vendor_id = #{vendorId},</if>
+			<if test="createdTime != null">created_time = #{createdTime},</if>
+			<if test="modifiedTime != null">modified_time = #{modifiedTime},</if>
+			<if test="remark != null">remark = #{remark},</if>
+			<if test="createdBy != null">created_by = #{createdBy},</if>
+			<if test="modifiedBy != null">modified_by = #{modifiedBy},</if>
+		</trim>
+		where id = #{id} </update>
+
+	<delete id="deleteLocationById" parameterType="Long">
+		delete from location where id = #{id}
+	</delete>
+
+	<delete id="deleteLocationByIds" parameterType="String"> delete from
+		location where id in <foreach item="id" collection="array" open="("
+			separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
 </mapper>

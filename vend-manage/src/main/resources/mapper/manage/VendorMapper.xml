@@ -1,109 +1,104 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="oasis.vend.manage.mapper.VendorMapper">
-    
-    <resultMap type="Vendor" id="VendorResult">
-        <result property="id"    column="id"    />
-        <result property="name"    column="name"    />
-        <result property="contactor"    column="contactor"    />
-        <result property="phone"    column="phone"    />
-        <result property="ratio"    column="ratio"    />
-        <result property="account"    column="account"    />
-        <result property="password"    column="password"    />
-        <result property="createdTime"    column="created_time"    />
-        <result property="modifiedTime"    column="modified_time"    />
-        <result property="remark"    column="remark"    />
-        <result property="createdBy"    column="created_by"    />
-        <result property="modifiedBy"    column="modified_by"    />
-    </resultMap>
 
-    <sql id="selectVendorVo">
-        select id, name, contactor, phone, ratio, account, password, created_time, modified_time, remark, created_by, modified_by from vendor
-    </sql>
+	<resultMap type="Vendor" id="VendorResult">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="contactor" column="contactor" />
+		<result property="phone" column="phone" />
+		<result property="ratio" column="ratio" />
+		<result property="account" column="account" />
+		<result property="password" column="password" />
+		<result property="createdTime" column="created_time" />
+		<result property="modifiedTime" column="modified_time" />
+		<result property="remark" column="remark" />
+		<result property="createdBy" column="created_by" />
+		<result property="modifiedBy" column="modified_by" />
+	</resultMap>
 
-    <select id="selectVendorList" parameterType="Vendor" resultMap="VendorResult">
-        <include refid="selectVendorVo"/>
-        <where>  
-            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-        </where>
-    </select>
-    
-    <select id="selectVendorById" parameterType="Long" resultMap="VendorResult">
-        <include refid="selectVendorVo"/>
-        where id = #{id}
-    </select>
+	<sql id="selectVendorVo">
+		select id, name, contactor, phone, ratio, account, password,
+		created_time, modified_time, remark, created_by, modified_by from vendor
+	</sql>
 
-    <insert id="insertVendor" parameterType="Vendor">
-        insert into vendor
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">id,</if>
-            <if test="name != null and name != ''">name,</if>
-            <if test="contactor != null and contactor != ''">contactor,</if>
-            <if test="phone != null and phone != ''">phone,</if>
-            <if test="ratio != null">ratio,</if>
-            <if test="account != null and account != ''">account,</if>
-            <if test="password != null and password != ''">password,</if>
-            <if test="createdTime != null">created_time,</if>
-            <if test="modifiedTime != null">modified_time,</if>
-            <if test="remark != null">remark,</if>
-            <if test="createdBy != null">created_by,</if>
-            <if test="modifiedBy != null">modified_by,</if>
-         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="id != null">#{id},</if>
-            <if test="name != null and name != ''">#{name},</if>
-            <if test="contactor != null and contactor != ''">#{contactor},</if>
-            <if test="phone != null and phone != ''">#{phone},</if>
-            <if test="ratio != null">#{ratio},</if>
-            <if test="account != null and account != ''">#{account},</if>
-            <if test="password != null and password != ''">#{password},</if>
-            <if test="createdTime != null">#{createdTime},</if>
-            <if test="modifiedTime != null">#{modifiedTime},</if>
-            <if test="remark != null">#{remark},</if>
-            <if test="createdBy != null">#{createdBy},</if>
-            <if test="modifiedBy != null">#{modifiedBy},</if>
-         </trim>
-    </insert>
-
-    <update id="updateVendor" parameterType="Vendor">
-        update vendor
-        <trim prefix="SET" suffixOverrides=",">
-            <if test="name != null and name != ''">name = #{name},</if>
-            <if test="contactor != null and contactor != ''">contactor = #{contactor},</if>
-            <if test="phone != null and phone != ''">phone = #{phone},</if>
-            <if test="ratio != null">ratio = #{ratio},</if>
-            <if test="account != null and account != ''">account = #{account},</if>
-            <if test="password != null and password != ''">password = #{password},</if>
-            <if test="createdTime != null">created_time = #{createdTime},</if>
-            <if test="modifiedTime != null">modified_time = #{modifiedTime},</if>
-            <if test="remark != null">remark = #{remark},</if>
-            <if test="createdBy != null">created_by = #{createdBy},</if>
-            <if test="modifiedBy != null">modified_by = #{modifiedBy},</if>
-        </trim>
-        where id = #{id}
-    </update>
-
-    <delete id="deleteVendorById" parameterType="Long">
-        delete from vendor where id = #{id}
-    </delete>
-
-    <delete id="deleteVendorByIds" parameterType="String">
-        delete from vendor where id in 
-        <foreach item="id" collection="array" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </delete>
-    <select id="selectVendorCustomList"
-		resultType="oasis.vend.manage.domain.custom.VendorCustom">
-		SELECT v.*,
-		       COUNT(l.id) AS location_count
-		FROM vendor v
-		LEFT JOIN location l ON v.id = l.vendor_id
-		<where>  
-            <if test="name != null  and name != ''"> and v.name like concat('%', #{name}, '%')</if>
-        </where>
-        GROUP BY v.id
+	<select id="selectVendorList" parameterType="Vendor"
+		resultMap="VendorResult">
+		<include refid="selectVendorVo" />
+		<where>
+			<if test="name != null  and name != ''"> and name like concat('%',
+				#{name}, '%')</if>
+		</where>
 	</select>
+
+	<select id="selectVendorById" parameterType="Long" resultMap="VendorResult">
+		<include refid="selectVendorVo" /> where id = #{id} </select>
+
+	<insert id="insertVendor" parameterType="Vendor"> insert into vendor <trim
+			prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="name != null and name != ''">name,</if>
+			<if test="contactor != null and contactor != ''">contactor,</if>
+			<if test="phone != null and phone != ''">phone,</if>
+			<if test="ratio != null">ratio,</if>
+			<if test="account != null and account != ''">account,</if>
+			<if test="password != null and password != ''">password,</if>
+			<if test="createdTime != null">created_time,</if>
+			<if test="modifiedTime != null">modified_time,</if>
+			<if test="remark != null">remark,</if>
+			<if test="createdBy != null">created_by,</if>
+			<if test="modifiedBy != null">modified_by,</if>
+		</trim>
+        <trim
+			prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="name != null and name != ''">#{name},</if>
+			<if test="contactor != null and contactor != ''">#{contactor},</if>
+			<if test="phone != null and phone != ''">#{phone},</if>
+			<if test="ratio != null">#{ratio},</if>
+			<if test="account != null and account != ''">#{account},</if>
+			<if test="password != null and password != ''">#{password},</if>
+			<if test="createdTime != null">#{createdTime},</if>
+			<if test="modifiedTime != null">#{modifiedTime},</if>
+			<if test="remark != null">#{remark},</if>
+			<if test="createdBy != null">#{createdBy},</if>
+			<if test="modifiedBy != null">#{modifiedBy},</if>
+		</trim>
+	</insert>
+
+	<update id="updateVendor" parameterType="Vendor"> update vendor <trim
+			prefix="SET" suffixOverrides=",">
+			<if test="name != null and name != ''">name = #{name},</if>
+			<if test="contactor != null and contactor != ''">contactor =
+		#{contactor},</if>
+			<if test="phone != null and phone != ''">phone = #{phone},</if>
+			<if test="ratio != null">ratio = #{ratio},</if>
+			<if test="account != null and account != ''">account = #{account},</if>
+			<if test="password != null and password != ''">password =
+		#{password},</if>
+			<if test="createdTime != null">created_time = #{createdTime},</if>
+			<if test="modifiedTime != null">modified_time = #{modifiedTime},</if>
+			<if test="remark != null">remark = #{remark},</if>
+			<if test="createdBy != null">created_by = #{createdBy},</if>
+			<if test="modifiedBy != null">modified_by = #{modifiedBy},</if>
+		</trim>
+		where id = #{id} </update>
+
+	<delete id="deleteVendorById" parameterType="Long">
+		delete from vendor where id = #{id}
+	</delete>
+
+	<delete id="deleteVendorByIds" parameterType="String"> delete from vendor
+		where id in <foreach item="id" collection="array" open="(" separator=","
+			close=")">
+			#{id}
+		</foreach>
+	</delete>
+	<select id="selectVendorCustomList"
+		resultType="oasis.vend.manage.domain.custom.VendorCustom"> SELECT v.*,
+		COUNT(l.id) AS location_count FROM vendor v LEFT JOIN location l ON v.id
+		= l.vendor_id <where>
+			<if test="name != null  and name != ''"> and v.name like concat('%',
+		#{name}, '%')</if>
+		</where> GROUP BY v.id </select>
 </mapper>
