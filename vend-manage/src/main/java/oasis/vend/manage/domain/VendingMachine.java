@@ -8,44 +8,44 @@ import oasis.vend.common.annotation.Excel;
 import oasis.vend.common.core.domain.BaseEntity;
 
 /**
- * Vending Machine Information对象 tb_vending_machine
+ * Vending Machine Manage对象 vending_machine
  * 
  * @author oasis
- * @date 2025-01-04
+ * @date 2025-01-07
  */
 public class VendingMachine extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** ID */
+    /** Machine ID */
     private Long id;
 
-    /** Code */
-    @Excel(name = "Code")
+    /** Inner Code */
+    @Excel(name = "Inner Code")
     private String innerCode;
 
-    /** Capacity */
+    /** Max Capacity */
     private Long aisleMaxCapacity;
 
-    /** Node */
-    private Long nodeId;
+    /** Location ID */
+    private Long locationId;
 
     /** Address */
     @Excel(name = "Address")
-    private String addr;
+    private String address;
 
     /** Last Supply Time */
     private Date lastSupplyTime;
 
-    /** Business Type */
-    private Long businessType;
+    /** Business Area */
+    private Long businessArea;
 
     /** Region ID */
     private Long regionId;
 
-    /** Partner ID */
-    @Excel(name = "Partner ID")
-    private Long partnerId;
+    /** Vendor ID */
+    @Excel(name = "Vendor ID")
+    private Long vendorId;
 
     /** Type ID */
     @Excel(name = "Type ID")
@@ -97,23 +97,23 @@ public class VendingMachine extends BaseEntity
     {
         return aisleMaxCapacity;
     }
-    public void setNodeId(Long nodeId) 
+    public void setLocationId(Long locationId) 
     {
-        this.nodeId = nodeId;
+        this.locationId = locationId;
     }
 
-    public Long getNodeId() 
+    public Long getLocationId() 
     {
-        return nodeId;
+        return locationId;
     }
-    public void setAddr(String addr) 
+    public void setAddress(String address) 
     {
-        this.addr = addr;
+        this.address = address;
     }
 
-    public String getAddr() 
+    public String getAddress() 
     {
-        return addr;
+        return address;
     }
     public void setLastSupplyTime(Date lastSupplyTime) 
     {
@@ -124,14 +124,14 @@ public class VendingMachine extends BaseEntity
     {
         return lastSupplyTime;
     }
-    public void setBusinessType(Long businessType) 
+    public void setBusinessArea(Long businessArea) 
     {
-        this.businessType = businessType;
+        this.businessArea = businessArea;
     }
 
-    public Long getBusinessType() 
+    public Long getBusinessArea() 
     {
-        return businessType;
+        return businessArea;
     }
     public void setRegionId(Long regionId) 
     {
@@ -142,14 +142,14 @@ public class VendingMachine extends BaseEntity
     {
         return regionId;
     }
-    public void setPartnerId(Long partnerId) 
+    public void setVendorId(Long vendorId) 
     {
-        this.partnerId = partnerId;
+        this.vendorId = vendorId;
     }
 
-    public Long getPartnerId() 
+    public Long getVendorId() 
     {
-        return partnerId;
+        return vendorId;
     }
     public void setVmTypeId(Long vmTypeId) 
     {
@@ -221,12 +221,12 @@ public class VendingMachine extends BaseEntity
             .append("id", getId())
             .append("innerCode", getInnerCode())
             .append("aisleMaxCapacity", getAisleMaxCapacity())
-            .append("nodeId", getNodeId())
-            .append("addr", getAddr())
+            .append("locationId", getLocationId())
+            .append("address", getAddress())
             .append("lastSupplyTime", getLastSupplyTime())
-            .append("businessType", getBusinessType())
+            .append("businessArea", getBusinessArea())
             .append("regionId", getRegionId())
-            .append("partnerId", getPartnerId())
+            .append("vendorId", getVendorId())
             .append("vmTypeId", getVmTypeId())
             .append("vmStatus", getVmStatus())
             .append("runningStatus", getRunningStatus())

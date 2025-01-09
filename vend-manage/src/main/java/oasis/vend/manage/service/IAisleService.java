@@ -7,7 +7,7 @@ import oasis.vend.manage.domain.Aisle;
  * Aisle InformationService接口
  * 
  * @author oasis
- * @date 2025-01-04
+ * @date 2025-01-07
  */
 public interface IAisleService 
 {

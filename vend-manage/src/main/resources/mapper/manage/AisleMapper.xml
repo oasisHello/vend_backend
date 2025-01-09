@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"/Users/oasis/code/vend_backend/vend-admin/src/main/resources/mybatis/mybatis-3-mapper.dtd">
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="oasis.vend.manage.mapper.AisleMapper">
     
     <resultMap type="Aisle" id="AisleResult">
         <result property="id"    column="id"    />
-        <result property="aisleCode"    column="aisle_code"    />
+        <result property="code"    column="code"    />
         <result property="skuId"    column="sku_id"    />
         <result property="vmId"    column="vm_id"    />
         <result property="innerCode"    column="inner_code"    />
@@ -18,13 +18,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectAisleVo">
-        select id, aisle_code, sku_id, vm_id, inner_code, max_capacity, current_capacity, last_supply_time, create_time, update_time from tb_aisle
+        select id, code, sku_id, vm_id, inner_code, max_capacity, current_capacity, last_supply_time, create_time, update_time from aisle
     </sql>
 
     <select id="selectAisleList" parameterType="Aisle" resultMap="AisleResult">
         <include refid="selectAisleVo"/>
         <where>  
-            <if test="aisleCode != null  and aisleCode != ''"> and aisle_code = #{aisleCode}</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
             <if test="skuId != null "> and sku_id = #{skuId}</if>
             <if test="vmId != null "> and vm_id = #{vmId}</if>
             <if test="innerCode != null  and innerCode != ''"> and inner_code = #{innerCode}</if>
@@ -40,10 +40,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <insert id="insertAisle" parameterType="Aisle">
-        insert into tb_aisle
+        insert into aisle
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
-            <if test="aisleCode != null and aisleCode != ''">aisle_code,</if>
+            <if test="code != null and code != ''">code,</if>
             <if test="skuId != null">sku_id,</if>
             <if test="vmId != null">vm_id,</if>
             <if test="innerCode != null">inner_code,</if>
@@ -55,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
-            <if test="aisleCode != null and aisleCode != ''">#{aisleCode},</if>
+            <if test="code != null and code != ''">#{code},</if>
             <if test="skuId != null">#{skuId},</if>
             <if test="vmId != null">#{vmId},</if>
             <if test="innerCode != null">#{innerCode},</if>
@@ -68,9 +68,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateAisle" parameterType="Aisle">
-        update tb_aisle
+        update aisle
         <trim prefix="SET" suffixOverrides=",">
-            <if test="aisleCode != null and aisleCode != ''">aisle_code = #{aisleCode},</if>
+            <if test="code != null and code != ''">code = #{code},</if>
             <if test="skuId != null">sku_id = #{skuId},</if>
             <if test="vmId != null">vm_id = #{vmId},</if>
             <if test="innerCode != null">inner_code = #{innerCode},</if>
@@ -84,11 +84,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteAisleById" parameterType="Long">
-        delete from tb_aisle where id = #{id}
+        delete from aisle where id = #{id}
     </delete>
 
     <delete id="deleteAisleByIds" parameterType="String">
-        delete from tb_aisle where id in 
+        delete from aisle where id in 
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

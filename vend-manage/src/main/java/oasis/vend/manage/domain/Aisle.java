@@ -8,10 +8,10 @@ import oasis.vend.common.annotation.Excel;
 import oasis.vend.common.core.domain.BaseEntity;
 
 /**
- * Aisle Information对象 tb_aisle
+ * Aisle Information对象 aisle
  * 
  * @author oasis
- * @date 2025-01-04
+ * @date 2025-01-07
  */
 public class Aisle extends BaseEntity
 {
@@ -20,9 +20,9 @@ public class Aisle extends BaseEntity
     /** Channel ID */
     private Long id;
 
-    /** Channel Code */
-    @Excel(name = "Channel Code")
-    private String aisleCode;
+    /** aisle Code */
+    @Excel(name = "aisle Code")
+    private String code;
 
     /** SKU ID */
     @Excel(name = "SKU ID")
@@ -58,14 +58,14 @@ public class Aisle extends BaseEntity
     {
         return id;
     }
-    public void setAisleCode(String aisleCode) 
+    public void setCode(String code) 
     {
-        this.aisleCode = aisleCode;
+        this.code = code;
     }
 
-    public String getAisleCode() 
+    public String getCode() 
     {
-        return aisleCode;
+        return code;
     }
     public void setSkuId(Long skuId) 
     {
@@ -126,7 +126,7 @@ public class Aisle extends BaseEntity
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
-            .append("aisleCode", getAisleCode())
+            .append("code", getCode())
             .append("skuId", getSkuId())
             .append("vmId", getVmId())
             .append("innerCode", getInnerCode())

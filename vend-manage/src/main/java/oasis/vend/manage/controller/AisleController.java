@@ -25,7 +25,7 @@ import oasis.vend.common.core.page.TableDataInfo;
  * Aisle InformationController
  * 
  * @author oasis
- * @date 2025-01-04
+ * @date 2025-01-07
  */
 @RestController
 @RequestMapping("/manage/aisle")

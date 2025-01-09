@@ -4,57 +4,57 @@ import java.util.List;
 import oasis.vend.manage.domain.VendingMachine;
 
 /**
- * Vending Machine InformationService接口
+ * Vending Machine ManageService接口
  * 
  * @author oasis
- * @date 2025-01-04
+ * @date 2025-01-07
  */
 public interface IVendingMachineService 
 {
     /**
-     * 查询Vending Machine Information
+     * 查询Vending Machine Manage
      * 
-     * @param id Vending Machine Information主键
-     * @return Vending Machine Information
+     * @param id Vending Machine Manage主键
+     * @return Vending Machine Manage
      */
     public VendingMachine selectVendingMachineById(Long id);
 
     /**
-     * 查询Vending Machine Information列表
+     * 查询Vending Machine Manage列表
      * 
-     * @param vendingMachine Vending Machine Information
-     * @return Vending Machine Information集合
+     * @param vendingMachine Vending Machine Manage
+     * @return Vending Machine Manage集合
      */
     public List<VendingMachine> selectVendingMachineList(VendingMachine vendingMachine);
 
     /**
-     * 新增Vending Machine Information
+     * 新增Vending Machine Manage
      * 
-     * @param vendingMachine Vending Machine Information
+     * @param vendingMachine Vending Machine Manage
      * @return 结果
      */
     public int insertVendingMachine(VendingMachine vendingMachine);
 
     /**
-     * 修改Vending Machine Information
+     * 修改Vending Machine Manage
      * 
-     * @param vendingMachine Vending Machine Information
+     * @param vendingMachine Vending Machine Manage
      * @return 结果
      */
     public int updateVendingMachine(VendingMachine vendingMachine);
 
     /**
-     * 批量删除Vending Machine Information
+     * 批量删除Vending Machine Manage
      * 
-     * @param ids 需要删除的Vending Machine Information主键集合
+     * @param ids 需要删除的Vending Machine Manage主键集合
      * @return 结果
      */
     public int deleteVendingMachineByIds(Long[] ids);
 
     /**
-     * 删除Vending Machine Information信息
+     * 删除Vending Machine Manage信息
      * 
-     * @param id Vending Machine Information主键
+     * @param id Vending Machine Manage主键
      * @return 结果
      */
     public int deleteVendingMachineById(Long id);

@@ -22,22 +22,22 @@ import oasis.vend.common.utils.poi.ExcelUtil;
 import oasis.vend.common.core.page.TableDataInfo;
 
 /**
- * Vending Machine TypesController
+ * Machine TypesController
  * 
  * @author oasis
- * @date 2025-01-04
+ * @date 2025-01-07
  */
 @RestController
-@RequestMapping("/manage/vm_type")
+@RequestMapping("/manage/vmType")
 public class VmTypeController extends BaseController
 {
     @Autowired
     private IVmTypeService vmTypeService;
 
     /**
-     * 查询Vending Machine Types列表
+     * 查询Machine Types列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:vm_type:list')")
+    @PreAuthorize("@ss.hasPermi('manage:vmType:list')")
     @GetMapping("/list")
     public TableDataInfo list(VmType vmType)
     {
@@ -47,22 +47,22 @@ public class VmTypeController extends BaseController
     }
 
     /**
-     * 导出Vending Machine Types列表
+     * 导出Machine Types列表
      */
-    @PreAuthorize("@ss.hasPermi('manage:vm_type:export')")
-    @Log(title = "Vending Machine Types", businessType = BusinessType.EXPORT)
+    @PreAuthorize("@ss.hasPermi('manage:vmType:export')")
+    @Log(title = "Machine Types", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, VmType vmType)
     {
         List<VmType> list = vmTypeService.selectVmTypeList(vmType);
         ExcelUtil<VmType> util = new ExcelUtil<VmType>(VmType.class);
-        util.exportExcel(response, list, "Vending Machine Types数据");
+        util.exportExcel(response, list, "Machine Types数据");
     }
 
     /**
-     * 获取Vending Machine Types详细信息
+     * 获取Machine Types详细信息
      */
-    @PreAuthorize("@ss.hasPermi('manage:vm_type:query')")
+    @PreAuthorize("@ss.hasPermi('manage:vmType:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -70,10 +70,10 @@ public class VmTypeController extends BaseController
     }
 
     /**
-     * 新增Vending Machine Types
+     * 新增Machine Types
      */
-    @PreAuthorize("@ss.hasPermi('manage:vm_type:add')")
-    @Log(title = "Vending Machine Types", businessType = BusinessType.INSERT)
+    @PreAuthorize("@ss.hasPermi('manage:vmType:add')")
+    @Log(title = "Machine Types", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody VmType vmType)
     {
@@ -81,10 +81,10 @@ public class VmTypeController extends BaseController
     }
 
     /**
-     * 修改Vending Machine Types
+     * 修改Machine Types
      */
-    @PreAuthorize("@ss.hasPermi('manage:vm_type:edit')")
-    @Log(title = "Vending Machine Types", businessType = BusinessType.UPDATE)
+    @PreAuthorize("@ss.hasPermi('manage:vmType:edit')")
+    @Log(title = "Machine Types", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody VmType vmType)
     {
@@ -92,10 +92,10 @@ public class VmTypeController extends BaseController
     }
 
     /**
-     * 删除Vending Machine Types
+     * 删除Machine Types
      */
-    @PreAuthorize("@ss.hasPermi('manage:vm_type:remove')")
-    @Log(title = "Vending Machine Types", businessType = BusinessType.DELETE)
+    @PreAuthorize("@ss.hasPermi('manage:vmType:remove')")
+    @Log(title = "Machine Types", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {

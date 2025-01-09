@@ -22,10 +22,10 @@ import oasis.vend.common.utils.poi.ExcelUtil;
 import oasis.vend.common.core.page.TableDataInfo;
 
 /**
- * Vending Machine InformationController
+ * Vending Machine ManageController
  * 
  * @author oasis
- * @date 2025-01-04
+ * @date 2025-01-07
  */
 @RestController
 @RequestMapping("/manage/vm")
@@ -35,7 +35,7 @@ public class VendingMachineController extends BaseController
     private IVendingMachineService vendingMachineService;
 
     /**
-     * 查询Vending Machine Information列表
+     * 查询Vending Machine Manage列表
      */
     @PreAuthorize("@ss.hasPermi('manage:vm:list')")
     @GetMapping("/list")
@@ -47,20 +47,20 @@ public class VendingMachineController extends BaseController
     }
 
     /**
-     * 导出Vending Machine Information列表
+     * 导出Vending Machine Manage列表
      */
     @PreAuthorize("@ss.hasPermi('manage:vm:export')")
-    @Log(title = "Vending Machine Information", businessType = BusinessType.EXPORT)
+    @Log(title = "Vending Machine Manage", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, VendingMachine vendingMachine)
     {
         List<VendingMachine> list = vendingMachineService.selectVendingMachineList(vendingMachine);
         ExcelUtil<VendingMachine> util = new ExcelUtil<VendingMachine>(VendingMachine.class);
-        util.exportExcel(response, list, "Vending Machine Information数据");
+        util.exportExcel(response, list, "Vending Machine Manage数据");
     }
 
     /**
-     * 获取Vending Machine Information详细信息
+     * 获取Vending Machine Manage详细信息
      */
     @PreAuthorize("@ss.hasPermi('manage:vm:query')")
     @GetMapping(value = "/{id}")
@@ -70,10 +70,10 @@ public class VendingMachineController extends BaseController
     }
 
     /**
-     * 新增Vending Machine Information
+     * 新增Vending Machine Manage
      */
     @PreAuthorize("@ss.hasPermi('manage:vm:add')")
-    @Log(title = "Vending Machine Information", businessType = BusinessType.INSERT)
+    @Log(title = "Vending Machine Manage", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody VendingMachine vendingMachine)
     {
@@ -81,10 +81,10 @@ public class VendingMachineController extends BaseController
     }
 
     /**
-     * 修改Vending Machine Information
+     * 修改Vending Machine Manage
      */
     @PreAuthorize("@ss.hasPermi('manage:vm:edit')")
-    @Log(title = "Vending Machine Information", businessType = BusinessType.UPDATE)
+    @Log(title = "Vending Machine Manage", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody VendingMachine vendingMachine)
     {
@@ -92,10 +92,10 @@ public class VendingMachineController extends BaseController
     }
 
     /**
-     * 删除Vending Machine Information
+     * 删除Vending Machine Manage
      */
     @PreAuthorize("@ss.hasPermi('manage:vm:remove')")
-    @Log(title = "Vending Machine Information", businessType = BusinessType.DELETE)
+    @Log(title = "Vending Machine Manage", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {

@@ -6,40 +6,40 @@ import oasis.vend.common.annotation.Excel;
 import oasis.vend.common.core.domain.BaseEntity;
 
 /**
- * Vending Machine Types对象 tb_vm_type
+ * Machine Types对象 vm_type
  * 
  * @author oasis
- * @date 2025-01-04
+ * @date 2025-01-07
  */
 public class VmType extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
 
-    /** ID */
+    /** Type ID */
     private Long id;
 
-    /** Name */
-    @Excel(name = "Name")
+    /** Type Name */
+    @Excel(name = "Type Name")
     private String name;
 
-    /** Model */
-    @Excel(name = "Model")
-    private String model;
+    /** Code */
+    @Excel(name = "Code")
+    private String code;
 
-    /** Image */
-    @Excel(name = "Image")
+    /** Image URL */
+    @Excel(name = "Image URL")
     private String image;
 
-    /** Rows */
-    @Excel(name = "Rows")
-    private Long vmRow;
+    /** Number of Rows */
+    @Excel(name = "Number of Rows")
+    private Long rowCount;
 
-    /** Columns */
-    @Excel(name = "Columns")
-    private Long vmCol;
+    /** Number of Columns */
+    @Excel(name = "Number of Columns")
+    private Long colCount;
 
-    /** Max Capacity */
-    @Excel(name = "Max Capacity")
+    /** Maximum Capacity per Aisle */
+    @Excel(name = "Maximum Capacity per Aisle")
     private Long aisleMaxCapacity;
 
     public void setId(Long id) 
@@ -60,14 +60,14 @@ public class VmType extends BaseEntity
     {
         return name;
     }
-    public void setModel(String model) 
+    public void setCode(String code) 
     {
-        this.model = model;
+        this.code = code;
     }
 
-    public String getModel() 
+    public String getCode() 
     {
-        return model;
+        return code;
     }
     public void setImage(String image) 
     {
@@ -78,23 +78,23 @@ public class VmType extends BaseEntity
     {
         return image;
     }
-    public void setVmRow(Long vmRow) 
+    public void setRowCount(Long rowCount) 
     {
-        this.vmRow = vmRow;
+        this.rowCount = rowCount;
     }
 
-    public Long getVmRow() 
+    public Long getRowCount() 
     {
-        return vmRow;
+        return rowCount;
     }
-    public void setVmCol(Long vmCol) 
+    public void setColCount(Long colCount) 
     {
-        this.vmCol = vmCol;
+        this.colCount = colCount;
     }
 
-    public Long getVmCol() 
+    public Long getColCount() 
     {
-        return vmCol;
+        return colCount;
     }
     public void setAisleMaxCapacity(Long aisleMaxCapacity) 
     {
@@ -111,10 +111,10 @@ public class VmType extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("name", getName())
-            .append("model", getModel())
+            .append("code", getCode())
             .append("image", getImage())
-            .append("vmRow", getVmRow())
-            .append("vmCol", getVmCol())
+            .append("rowCount", getRowCount())
+            .append("colCount", getColCount())
             .append("aisleMaxCapacity", getAisleMaxCapacity())
             .toString();
     }

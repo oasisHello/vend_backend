@@ -8,10 +8,10 @@ import oasis.vend.manage.domain.VmType;
 import oasis.vend.manage.service.IVmTypeService;
 
 /**
- * Vending Machine TypesService业务层处理
+ * Machine TypesService业务层处理
  * 
  * @author oasis
- * @date 2025-01-04
+ * @date 2025-01-07
  */
 @Service
 public class VmTypeServiceImpl implements IVmTypeService 
@@ -20,10 +20,10 @@ public class VmTypeServiceImpl implements IVmTypeService
     private VmTypeMapper vmTypeMapper;
 
     /**
-     * 查询Vending Machine Types
+     * 查询Machine Types
      * 
-     * @param id Vending Machine Types主键
-     * @return Vending Machine Types
+     * @param id Machine Types主键
+     * @return Machine Types
      */
     @Override
     public VmType selectVmTypeById(Long id)
@@ -32,10 +32,10 @@ public class VmTypeServiceImpl implements IVmTypeService
     }
 
     /**
-     * 查询Vending Machine Types列表
+     * 查询Machine Types列表
      * 
-     * @param vmType Vending Machine Types
-     * @return Vending Machine Types
+     * @param vmType Machine Types
+     * @return Machine Types
      */
     @Override
     public List<VmType> selectVmTypeList(VmType vmType)
@@ -44,9 +44,9 @@ public class VmTypeServiceImpl implements IVmTypeService
     }
 
     /**
-     * 新增Vending Machine Types
+     * 新增Machine Types
      * 
-     * @param vmType Vending Machine Types
+     * @param vmType Machine Types
      * @return 结果
      */
     @Override
@@ -56,9 +56,9 @@ public class VmTypeServiceImpl implements IVmTypeService
     }
 
     /**
-     * 修改Vending Machine Types
+     * 修改Machine Types
      * 
-     * @param vmType Vending Machine Types
+     * @param vmType Machine Types
      * @return 结果
      */
     @Override
@@ -68,9 +68,9 @@ public class VmTypeServiceImpl implements IVmTypeService
     }
 
     /**
-     * 批量删除Vending Machine Types
+     * 批量删除Machine Types
      * 
-     * @param ids 需要删除的Vending Machine Types主键
+     * @param ids 需要删除的Machine Types主键
      * @return 结果
      */
     @Override
@@ -80,9 +80,9 @@ public class VmTypeServiceImpl implements IVmTypeService
     }
 
     /**
-     * 删除Vending Machine Types信息
+     * 删除Machine Types信息
      * 
-     * @param id Vending Machine Types主键
+     * @param id Machine Types主键
      * @return 结果
      */
     @Override
