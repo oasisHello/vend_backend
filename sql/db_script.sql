@@ -1,4 +1,4 @@
-vending_machinevending_machine-- Location Module
+e-- Location Module
 
 
 -- Region Table
@@ -59,27 +59,6 @@ CREATE TABLE location (
     FOREIGN KEY (region_id) REFERENCES region(id),
     FOREIGN KEY (vendor_id) REFERENCES vendor(id)
 );
-
-
--- 
--- Insert mock data into region table
-INSERT INTO region (id, name, created_time, modified_time, remark, created_by, modified_by)
-VALUES
-(1, 'Tokyo', '2024-12-01 10:00:00', '2024-12-01 10:00:00', 'Capital city of Japan', 'admin', 'admin');
-
--- Insert mock data into vendor table
-INSERT INTO vendor (id, name, contactor, phone, ratio, account, password, created_time, modified_time, remark, created_by, modified_by)
-VALUES
-(1, 'Vendor A', 'John Doe', '123-456-7890', 10.00, 'vendorA', 'password123', '2024-12-01 10:00:00', '2024-12-01 10:00:00', 'Primary vendor', 'admin', 'admin'),
-(2, 'Vendor B', 'Jane Smith', '234-567-8901', 15.00, 'vendorB', 'password456', '2024-12-01 10:00:00', '2024-12-01 10:00:00', 'Secondary vendor', 'admin', 'admin'),
-(3, 'Vendor C', 'Alice Johnson', '345-678-9012', 20.00, 'vendorC', 'password789', '2024-12-01 10:00:00', '2024-12-01 10:00:00', 'Tertiary vendor', 'admin', 'admin');
-
-
--- Insert mock data into operator table
-INSERT INTO operator (unique_id, name, created_time, modified_time, remark, created_by, modified_by)
-VALUES
-(1, 'Operator 1', '2024-12-01 10:00:00', '2024-12-01 10:00:00', 'First operator', 'admin', 'admin'),
-(2, 'Operator 2', '2024-12-01 10:00:00', '2024-12-01 10:00:00', 'Second operator', 'admin', 'admin');
 
 -- EMP Module
 
@@ -170,6 +149,49 @@ CREATE TABLE aisle (
 ALTER TABLE vending_machine 
 MODIFY COLUMN vm_status int COMMENT 'Machine Status';
 
+ALTER TABLE aisle
+MODIFY COLUMN id BIGINT	 AUTO_INCREMENT COMMENT	"Aisle ID";
+
+ALTER TABLE aisle
+MODIFY COLUMN sku_id BIGINT DEFAULT 0 COMMENT 'SKU ID';
+
+SET FOREIGN_KEY_CHECKS = 0; -- remove the foreign key check temporary　一時的に外部キーのチェックを無効にする
+ALTER TABLE region 
+MODIFY COLUMN id INT AUTO_INCREMENT;
+SET FOREIGN_KEY_CHECKS = 1;-- resume the foreign key check 　外部キーのチェックを再開する
 
 
+-- list location and its vm numbers
+SELECT 
+    l.id,
+    l.name,
+    l.address,
+    l.business_area,
+    l.region_id,
+    l.vendor_id,
+    l.created_time,
+    l.modified_time,
+    l.remark,
+    l.created_by,
+    l.modified_by,
+    COUNT(vm.id) AS vm_count,
+    r.`name` AS region_name,
+    v.`name` AS vendor_name
+FROM 
+    location l
+LEFT JOIN 
+    vending_machine vm ON l.id = vm.location_id
+LEFT JOIN 
+		region r ON l.region_id = r.id
+LEFT JOIN
+		vendor v ON l.vendor_id= v.id
+GROUP BY 
+    l.id
+
+
+-- region query
+SELECT * FROM region WHERE id =1;
+
+-- vendor query
+SELECT * FROM vendor WHERE id =1;
 

@@ -16,6 +16,25 @@
 		<result property="modifiedBy" column="modified_by" />
 	</resultMap>
 
+	<resultMap id="LocationCustomResult" type="LocationCustom">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="address" column="address" />
+		<result property="businessArea" column="business_area" />
+		<result property="regionId" column="region_id" />
+		<result property="vendorId" column="vendor_id" />
+		<result property="createdTime" column="created_time" />
+		<result property="modifiedTime" column="modified_time" />
+		<result property="remark" column="remark" />
+		<result property="createdBy" column="created_by" />
+		<result property="modifiedBy" column="modified_by" />
+		<result property="vmCount" column="vm_count" />
+		<association property="region" javaType="Region" column="region_id"
+			select="oasis.vend.manage.mapper.RegionMapper.selectRegionById" />
+		<association property="vendor" javaType="Vendor" column="vendor_id"
+			select="oasis.vend.manage.mapper.VendorMapper.selectVendorById" />
+	</resultMap>
+
 	<sql id="selectLocationVo">
 		select id, name, address, business_area, region_id, vendor_id,
 		created_time, modified_time, remark, created_by, modified_by from
@@ -91,4 +110,28 @@
 			#{id}
 		</foreach>
 	</delete>
+	<select id="selectLocationCustoms"
+		resultMap="LocationCustomResult"> 
+		SELECT 
+			l.id, 
+			l.name, 
+			l.address,
+			l.business_area, 
+			l.region_id, 
+			l.vendor_id, 
+			l.created_time,
+			l.modified_time, 
+			l.remark, 
+			l.created_by, 
+			l.modified_by, 
+			COUNT(vm.id) AS vm_count 
+			FROM location l 
+			LEFT JOIN 
+			vending_machine vm ON l.id = vm.location_id 
+			<where>
+			<if test="name != null  and name != ''"> and name like concat('%',#{name}, '%')</if>
+			<if test="regionId != null "> and l.region_id = #{regionId}</if>
+			<if test="vendorId != null "> and l.vendor_id = #{vendorId}</if>
+		</where>
+		GROUP BY l.id </select>
 </mapper>

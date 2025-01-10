@@ -1,24 +1,20 @@
 package oasis.vend.manage.service.impl;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-import oasis.vend.common.constant.VM;
-import oasis.vend.common.utils.DateUtils;
-import oasis.vend.common.utils.uuid.UUIDUtils;
-
-import org.apache.ibatis.transaction.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import oasis.vend.manage.mapper.AisleMapper;
-import oasis.vend.manage.mapper.VendingMachineMapper;
+import oasis.vend.common.constant.VM;
+import oasis.vend.common.utils.DateUtils;
+import oasis.vend.common.utils.uuid.UUIDUtils;
 import oasis.vend.manage.domain.Aisle;
 import oasis.vend.manage.domain.Location;
 import oasis.vend.manage.domain.VendingMachine;
 import oasis.vend.manage.domain.VmType;
+import oasis.vend.manage.mapper.VendingMachineMapper;
 import oasis.vend.manage.service.IAisleService;
 import oasis.vend.manage.service.ILocationService;
 import oasis.vend.manage.service.IVendingMachineService;
@@ -137,8 +133,7 @@ public class VendingMachineServiceImpl implements IVendingMachineService {
 		// 1.5set region id by location
 		vendingMachine.setRegionId(location.getRegionId());
 		// 1.6set vendor id by location
-		
-		
+
 		return vendingMachineMapper.updateVendingMachine(vendingMachine);
 	}
 
