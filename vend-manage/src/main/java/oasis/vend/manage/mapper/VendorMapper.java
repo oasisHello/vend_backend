@@ -1,6 +1,5 @@
 package oasis.vend.manage.mapper;
 
-import java.lang.foreign.AddressLayout;
 import java.util.List;
 import oasis.vend.manage.domain.Vendor;
 import oasis.vend.manage.domain.custom.VendorCustom;

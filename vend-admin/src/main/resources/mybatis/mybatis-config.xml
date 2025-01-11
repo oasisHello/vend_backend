@@ -12,7 +12,7 @@
 		<setting name="defaultExecutorType" value="SIMPLE" />
 		<!-- 指定 MyBatis 所用日志的具体实现 -->
 		<setting name="logImpl" value="SLF4J" />
-		<!-- 使用驼峰命名法转换字段 -->
+		<!-- 使用驼峰命名法转换字段 e.g., location_id(DB)<->locationId(Model) -->
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 	</settings>
 

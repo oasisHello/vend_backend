@@ -1,4 +1,4 @@
-e-- Location Module
+-- Location Module
 
 
 -- Region Table
@@ -145,7 +145,6 @@ CREATE TABLE aisle (
     FOREIGN KEY (vm_id) REFERENCES vending_machine(id)
 ) COMMENT = 'Aisle Information';
 
-
 ALTER TABLE vending_machine 
 MODIFY COLUMN vm_status int COMMENT 'Machine Status';
 
@@ -154,6 +153,15 @@ MODIFY COLUMN id BIGINT	 AUTO_INCREMENT COMMENT	"Aisle ID";
 
 ALTER TABLE aisle
 MODIFY COLUMN sku_id BIGINT DEFAULT 0 COMMENT 'SKU ID';
+
+-- Ensure aisle is deleted when the associated machine is deleted.
+ALTER TABLE aisle
+DROP FOREIGN KEY aisle_ibfk_1;
+
+ALTER TABLE aisle
+ADD CONSTRAINT fk_vm_id FOREIGN KEY (vm_id) REFERENCES vending_machine(id) 
+ON DELETE CASCADE 
+ON UPDATE CASCADE;
 
 SET FOREIGN_KEY_CHECKS = 0; -- remove the foreign key check temporary　一時的に外部キーのチェックを無効にする
 ALTER TABLE region 
@@ -186,7 +194,7 @@ LEFT JOIN
 LEFT JOIN
 		vendor v ON l.vendor_id= v.id
 GROUP BY 
-    l.id
+    l.id;
 
 
 -- region query
@@ -195,3 +203,6 @@ SELECT * FROM region WHERE id =1;
 -- vendor query
 SELECT * FROM vendor WHERE id =1;
 
+-- set a default value for last_supply_time
+ALTER TABLE vending_machine
+MODIFY COLUMN last_supply_time DATETIME DEFAULT '2025-01-01 00:00:00';
