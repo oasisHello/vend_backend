@@ -206,3 +206,13 @@ SELECT * FROM vendor WHERE id =1;
 -- set a default value for last_supply_time
 ALTER TABLE vending_machine
 MODIFY COLUMN last_supply_time DATETIME DEFAULT '2025-01-01 00:00:00';
+
+-- create policy table 
+CREATE TABLE policy (
+    id INT PRIMARY KEY AUTO_INCREMENT COMMENT 'Policy ID',
+    name VARCHAR(100) NOT NULL COMMENT 'Policy Name',
+    code VARCHAR(50) NOT NULL COMMENT 'Policy Code',
+    discount DECIMAL(5,2) COMMENT 'Discount Rate',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Created Time',
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated Time'
+) COMMENT='Policy Information Table';
