@@ -199,6 +199,36 @@ GROUP BY
 
 -- region query
 SELECT * FROM region WHERE id =1;
+-- shu_id -> good_id
+ALTER TABLE aisle 
+CHANGE COLUMN sku_id good_id BIGINT;
+
+-- Product Type Table (good_type)
+CREATE TABLE good_type (
+    id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Product type ID',
+    name VARCHAR(50) NOT NULL COMMENT 'Name',
+    code VARCHAR(20) NOT NULL COMMENT 'Code',
+    parent_id INT DEFAULT NULL COMMENT 'Parent ID',
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created date',
+    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated date'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Product type table';
+
+-- Product Table (good)
+CREATE TABLE good (
+    id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Product ID',
+    name VARCHAR(100) NOT NULL COMMENT 'Name',
+    image VARCHAR(500) COMMENT 'Image URL',
+    brand_name VARCHAR(50) COMMENT 'Brand name',
+    unit VARCHAR(20) COMMENT 'Unit',
+    price DECIMAL(10,2) NOT NULL COMMENT 'Price',
+    good_type_id INT NOT NULL COMMENT 'Product type ID',
+    is_discount TINYINT(1) DEFAULT 0 COMMENT 'Discount flag',
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created date',
+    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated date',
+    CONSTRAINT fk_good_good_type FOREIGN KEY (good_type_id) REFERENCES good_type(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Product table';
+
+
 
 -- vendor query
 SELECT * FROM vendor WHERE id =1;
