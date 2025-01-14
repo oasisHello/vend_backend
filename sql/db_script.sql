@@ -246,3 +246,7 @@ CREATE TABLE policy (
     create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Created Time',
     update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated Time'
 ) COMMENT='Policy Information Table';
+
+-- to ensure the name of goods type by index
+ALTER TABLE goods_type
+ADD UNIQUE (name);
