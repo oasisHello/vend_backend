@@ -163,6 +163,11 @@ ADD CONSTRAINT fk_vm_id FOREIGN KEY (vm_id) REFERENCES vending_machine(id)
 ON DELETE CASCADE 
 ON UPDATE CASCADE;
 
+ALTER TABLE aisle
+ADD CONSTRAINT fk_goods_id FOREIGN KEY (goods_id) REFERENCES	goods(id)
+ON DELETE CASCADE	
+ON	UPDATE CASCADE;
+
 SET FOREIGN_KEY_CHECKS = 0; -- remove the foreign key check temporary　一時的に外部キーのチェックを無効にする
 ALTER TABLE region 
 MODIFY COLUMN id INT AUTO_INCREMENT;
@@ -199,12 +204,12 @@ GROUP BY
 
 -- region query
 SELECT * FROM region WHERE id =1;
--- shu_id -> good_id
+-- good_id -> goods_id
 ALTER TABLE aisle 
-CHANGE COLUMN sku_id good_id BIGINT;
+CHANGE COLUMN good_id goods_id BIGINT;
 
 -- Product Type Table (good_type)
-CREATE TABLE good_type (
+CREATE TABLE goods_type (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Product type ID',
     name VARCHAR(50) NOT NULL COMMENT 'Name',
     code VARCHAR(20) NOT NULL COMMENT 'Code',
@@ -214,14 +219,14 @@ CREATE TABLE good_type (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Product type table';
 
 -- Product Table (good)
-CREATE TABLE good (
+CREATE TABLE goods (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Product ID',
     name VARCHAR(100) NOT NULL COMMENT 'Name',
     image VARCHAR(500) COMMENT 'Image URL',
     brand_name VARCHAR(50) COMMENT 'Brand name',
     unit VARCHAR(20) COMMENT 'Unit',
     price DECIMAL(10,2) NOT NULL COMMENT 'Price',
-    good_type_id INT NOT NULL COMMENT 'Product type ID',
+    goods_type_id INT NOT NULL COMMENT 'Product type ID',
     is_discount TINYINT(1) DEFAULT 0 COMMENT 'Discount flag',
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Created date',
     update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated date',
@@ -249,4 +254,6 @@ CREATE TABLE policy (
 
 -- to ensure the name of goods type by index
 ALTER TABLE goods_type
-ADD UNIQUE (name);
+ADD UNIQUE (NAME);
+
+add
