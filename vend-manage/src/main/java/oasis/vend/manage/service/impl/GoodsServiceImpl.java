@@ -2,7 +2,11 @@ package oasis.vend.manage.service.impl;
 
 import java.util.List;
 
+import oasis.vend.common.exception.ServiceException;
+import oasis.vend.manage.mapper.AisleMapper;
+import oasis.vend.manage.service.IAisleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.SpringVersion;
 import org.springframework.stereotype.Service;
 
 import oasis.vend.common.utils.DateUtils;
@@ -21,6 +25,8 @@ import oasis.vend.manage.service.IGoodsService;
 public class GoodsServiceImpl implements IGoodsService {
 	@Autowired
 	private GoodsMapper goodsMapper;
+	@Autowired
+	private IAisleService aisleService;
 
 	/**
 	 * 查询Product table
@@ -77,7 +83,13 @@ public class GoodsServiceImpl implements IGoodsService {
 	 */
 	@Override
 	public int deleteGoodsByIds(Long[] ids) {
-		return goodsMapper.deleteGoodsByIds(ids);
+		// check if this goods exists in aisle or not
+		int count = aisleService.countByGoodsId(ids);
+		if (count > 0) {
+			throw new ServiceException("Deletion failed: The item is currently associated with an existing aisle.");//削除に失敗した:対象は現在既存の通路に関連付けられています.
+		} else {
+			return goodsMapper.deleteGoodsByIds(ids);// if not execute deletion
+		}
 	}
 
 	/**

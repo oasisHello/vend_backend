@@ -66,4 +66,9 @@ public interface IAisleService
 	 * @return 结果
 	 */
      public void insertAisleBatch(List<Aisle> aisle);
+
+    /**
+     *  count the aisle by goods id
+     */
+    public int countByGoodsId(Long[] ids);
 }

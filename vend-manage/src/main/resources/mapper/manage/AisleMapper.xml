@@ -5,7 +5,7 @@
 	<resultMap type="Aisle" id="AisleResult">
 		<result property="id" column="id" />
 		<result property="code" column="code" />
-		<result property="skuId" column="sku_id" />
+		<result property="skuId" column="goods_id" />
 		<result property="vmId" column="vm_id" />
 		<result property="innerCode" column="inner_code" />
 		<result property="maxCapacity" column="max_capacity" />
@@ -16,7 +16,7 @@
 	</resultMap>
 
 	<sql id="selectAisleVo">
-		select id, code, sku_id, vm_id, inner_code, max_capacity,
+		select id, code, goods_id, vm_id, inner_code, max_capacity,
 		current_capacity, last_supply_time, create_time, update_time from aisle
 	</sql>
 
@@ -24,7 +24,7 @@
 		<include refid="selectAisleVo" />
 		<where>
 			<if test="code != null  and code != ''"> and code = #{code}</if>
-			<if test="skuId != null "> and sku_id = #{skuId}</if>
+			<if test="skuId != null "> and goods_id = #{skuId}</if>
 			<if test="vmId != null "> and vm_id = #{vmId}</if>
 			<if test="innerCode != null  and innerCode != ''"> and inner_code =
 				#{innerCode}</if>
@@ -43,7 +43,7 @@
 			prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">id,</if>
 			<if test="code != null and code != ''">code,</if>
-			<if test="skuId != null">sku_id,</if>
+			<if test="skuId != null">goods_id,</if>
 			<if test="vmId != null">vm_id,</if>
 			<if test="innerCode != null">inner_code,</if>
 			<if test="maxCapacity != null">max_capacity,</if>
@@ -88,7 +88,7 @@
 	<update id="updateAisle" parameterType="Aisle"> update aisle <trim
 			prefix="SET" suffixOverrides=",">
 			<if test="code != null and code != ''">code = #{code},</if>
-			<if test="skuId != null">sku_id = #{skuId},</if>
+			<if test="skuId != null">goods_id = #{skuId},</if>
 			<if test="vmId != null">vm_id = #{vmId},</if>
 			<if test="innerCode != null">inner_code = #{innerCode},</if>
 			<if test="maxCapacity != null">max_capacity = #{maxCapacity},</if>
@@ -111,4 +111,13 @@
 			#{id}
 		</foreach>
 	</delete>
+	    <!-- Goods IDで集計 -->
+    <select id="countByGoodsId" resultType="int" parameterType="Long[]">
+        SELECT COUNT(*) 
+        FROM aisle
+        WHERE goods_id IN 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

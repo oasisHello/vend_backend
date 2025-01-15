@@ -90,11 +90,17 @@ public class AisleServiceImpl implements IAisleService {
 	/**
 	 * insert aisle in a batch way
 	 * 
-	 * @param aisle Aisle Information
+	 * @param aisles Aisle Information
 	 * @return 结果
 	 */
 	@Override
 	public void insertAisleBatch(List<Aisle> aisles) {
 		aisleMapper.insertAisleBatch(aisles);
 	}
+
+	/**
+	 * count the aisle by goods id
+	 * @param ids
+	 */
+	public int countByGoodsId(Long[] ids){ return aisleMapper.countByGoodsId(ids);}
 }
