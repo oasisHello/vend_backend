@@ -58,4 +58,11 @@ public interface IGoodsService
      * @return 结果
      */
     public int deleteGoodsById(Long id);
+
+    /**
+     * insert multi goods
+     * @param goodsList
+     * @return
+     */
+    public int batchInsert(List<Goods> goodsList);
 }

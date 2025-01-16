@@ -78,6 +78,7 @@ public class CommonController
 
     /**
      * 通用上传请求（单个）
+     * NOTE:to handle the /common/upload route
      */
     @PostMapping("/upload")
     public AjaxResult uploadFile(MultipartFile file) throws Exception

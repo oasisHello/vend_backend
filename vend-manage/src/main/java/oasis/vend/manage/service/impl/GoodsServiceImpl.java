@@ -102,4 +102,13 @@ public class GoodsServiceImpl implements IGoodsService {
 	public int deleteGoodsById(Long id) {
 		return goodsMapper.deleteGoodsById(id);
 	}
+
+	/**
+	 * Insert multi goods records
+	 * @param goodsList
+	 * @return
+	 */
+	public int batchInsert(List<Goods> goodsList) {
+		return goodsMapper.batchInsert(goodsList);
+	}
 }

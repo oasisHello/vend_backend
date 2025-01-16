@@ -1,36 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="oasis.vend.manage.mapper.GoodsMapper">
-    
+
     <resultMap type="Goods" id="GoodsResult">
-        <result property="id"    column="id"    />
-        <result property="name"    column="name"    />
-        <result property="code"    column="code"    />
-        <result property="image"    column="image"    />
-        <result property="brandName"    column="brand_name"    />
-        <result property="unit"    column="unit"    />
-        <result property="price"    column="price"    />
-        <result property="goodsTypeId"    column="goods_type_id"    />
-        <result property="isDiscount"    column="is_discount"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateTime"    column="update_time"    />
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="code" column="code"/>
+        <result property="image" column="image"/>
+        <result property="brandName" column="brand_name"/>
+        <result property="unit" column="unit"/>
+        <result property="price" column="price"/>
+        <result property="goodsTypeId" column="goods_type_id"/>
+        <result property="isDiscount" column="is_discount"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <sql id="selectGoodsVo">
-        select id, name, code, image, brand_name, unit, price, goods_type_id, is_discount, create_time, update_time from goods
+        select id, name, code, image, brand_name, unit, price, goods_type_id, is_discount, create_time, update_time from
+        goods
     </sql>
 
     <select id="selectGoodsList" parameterType="Goods" resultMap="GoodsResult">
         <include refid="selectGoodsVo"/>
-        <where>  
-            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
-            <if test="code != null  and code != ''"> and code = #{code}</if>
-            <if test="goodsTypeId != null "> and goods_type_id = #{goodsTypeId}</if>
+        <where>
+            <if test="name != null  and name != ''">and name like concat('%', #{name}, '%')</if>
+            <if test="code != null  and code != ''">and code = #{code}</if>
+            <if test="goodsTypeId != null ">and goods_type_id = #{goodsTypeId}</if>
         </where>
     </select>
-    
+
     <select id="selectGoodsById" parameterType="Long" resultMap="GoodsResult">
         <include refid="selectGoodsVo"/>
         where id = #{id}
@@ -49,7 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isDiscount != null">is_discount,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="name != null and name != ''">#{name},</if>
             <if test="code != null and code != ''">#{code},</if>
@@ -61,7 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isDiscount != null">#{isDiscount},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
-         </trim>
+        </trim>
     </insert>
 
     <update id="updateGoods" parameterType="Goods">
@@ -86,9 +87,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteGoodsByIds" parameterType="String">
-        delete from goods where id in 
+        delete from goods where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
     </delete>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO goods (name, code, image, brand_name, unit, price, goods_type_id, is_discount)
+        VALUES
+        <foreach collection="goodsList" item="item" separator=",">
+            (#{item.name}, #{item.code}, #{item.image}, #{item.brandName}, #{item.unit}, #{item.price},
+            #{item.goodsTypeId}, #{item.isDiscount})
+        </foreach>
+    </insert>
 </mapper>

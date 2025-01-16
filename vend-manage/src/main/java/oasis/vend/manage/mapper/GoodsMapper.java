@@ -2,6 +2,7 @@ package oasis.vend.manage.mapper;
 
 import java.util.List;
 import oasis.vend.manage.domain.Goods;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * Product tableMapper接口
@@ -58,4 +59,11 @@ public interface GoodsMapper
      * @return 结果
      */
     public int deleteGoodsByIds(Long[] ids);
+
+    /**
+     * insert multi goods
+     * @param goodsList
+     * @return
+     */
+    public int batchInsert(@Param("goodsList") List<Goods> goodsList);
 }
