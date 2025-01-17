@@ -24,15 +24,15 @@ public class Aisle extends BaseEntity
     @Excel(name = "aisle Code")
     private String code;
 
-    /** SKU ID */
-    @Excel(name = "SKU ID")
-    private Long skuId;
+    /** Goods ID */
+    @Excel(name = "Goods ID")
+    private Long goodsId;
 
     /** Machine ID */
     @Excel(name = "Machine ID")
     private Long vmId;
 
-    /** Inner Code */
+    /** Machine Code */
     @Excel(name = "Inner Code")
     private String innerCode;
 
@@ -67,14 +67,14 @@ public class Aisle extends BaseEntity
     {
         return code;
     }
-    public void setSkuId(Long skuId) 
+    public void setGoodsId(Long goodsId)
     {
-        this.skuId = skuId;
+        this.goodsId = goodsId;
     }
 
-    public Long getSkuId() 
+    public Long getGoodsId()
     {
-        return skuId;
+        return goodsId;
     }
     public void setVmId(Long vmId) 
     {
@@ -127,7 +127,7 @@ public class Aisle extends BaseEntity
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("id", getId())
             .append("code", getCode())
-            .append("skuId", getSkuId())
+            .append("goodsId", getGoodsId())
             .append("vmId", getVmId())
             .append("innerCode", getInnerCode())
             .append("maxCapacity", getMaxCapacity())

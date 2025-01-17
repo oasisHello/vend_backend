@@ -3,6 +3,7 @@ package oasis.vend.manage.mapper;
 import java.util.List;
 
 import oasis.vend.manage.domain.Aisle;
+import oasis.vend.manage.domain.custom.AisleCustom;
 
 /**
  * Aisle InformationMapper接口
@@ -75,4 +76,10 @@ public interface AisleMapper {
 	 */
 	public int countByGoodsId(Long[] ids);
 
+	/**
+	 *
+	 * @param innerCode
+	 * @return
+	 */
+    public List<AisleCustom> selectAisleCustomByinnerCode(String innerCode);
 }

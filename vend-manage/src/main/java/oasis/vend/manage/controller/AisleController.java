@@ -101,4 +101,13 @@ public class AisleController extends BaseController
     {
         return toAjax(aisleService.deleteAisleByIds(ids));
     }
+
+    /**
+     * List the AisleCustom
+     */
+    @PreAuthorize("@ss.hasPermi('manage:aisle:list')")
+    @GetMapping(value = "/list/{innerCode}")
+    public AjaxResult getAisleCustomList(@PathVariable("innerCode") String innerCode){
+        return success(aisleService.selectAisleCustomByinnerCode(innerCode));
+    }
 }

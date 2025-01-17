@@ -1,7 +1,9 @@
 package oasis.vend.manage.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 import oasis.vend.common.utils.DateUtils;
+import oasis.vend.manage.domain.custom.AisleCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import oasis.vend.manage.mapper.AisleMapper;
@@ -103,4 +105,13 @@ public class AisleServiceImpl implements IAisleService {
 	 * @param ids
 	 */
 	public int countByGoodsId(Long[] ids){ return aisleMapper.countByGoodsId(ids);}
+
+	/**
+	 * select AisleCustom by inner codes
+	 * @param innerCode
+	 * @return
+	 */
+	public List<AisleCustom> selectAisleCustomByinnerCode(String innerCode) {
+		return aisleMapper.selectAisleCustomByinnerCode(innerCode);
+	}
 }

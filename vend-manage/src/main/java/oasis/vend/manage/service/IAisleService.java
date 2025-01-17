@@ -2,6 +2,7 @@ package oasis.vend.manage.service;
 
 import java.util.List;
 import oasis.vend.manage.domain.Aisle;
+import oasis.vend.manage.domain.custom.AisleCustom;
 
 /**
  * Aisle InformationService接口
@@ -71,4 +72,13 @@ public interface IAisleService
      *  count the aisle by goods id
      */
     public int countByGoodsId(Long[] ids);
+
+    /**
+     * select AisleCustoms by innerCode
+     *
+     * @param innerCode
+     * @return aisleCustom
+     */
+
+    public List<AisleCustom> selectAisleCustomByinnerCode(String innerCode);
 }
