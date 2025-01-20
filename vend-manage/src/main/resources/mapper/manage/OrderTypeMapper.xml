@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="oasis.vend.manage.mapper.OrderTypeMapper">
+    
+    <resultMap type="OrderType" id="OrderTypeResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="parentType"    column="parent_type"    />
+    </resultMap>
+
+    <sql id="selectOrderTypeVo">
+        select id, name, parent_type from order_type
+    </sql>
+
+    <select id="selectOrderTypeList" parameterType="OrderType" resultMap="OrderTypeResult">
+        <include refid="selectOrderTypeVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="parentType != null "> and parent_type = #{parentType}</if>
+        </where>
+    </select>
+    
+    <select id="selectOrderTypeById" parameterType="Long" resultMap="OrderTypeResult">
+        <include refid="selectOrderTypeVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertOrderType" parameterType="OrderType" useGeneratedKeys="true" keyProperty="id">
+        insert into order_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="parentType != null">parent_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="parentType != null">#{parentType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateOrderType" parameterType="OrderType">
+        update order_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="parentType != null">parent_type = #{parentType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteOrderTypeById" parameterType="Long">
+        delete from order_type where id = #{id}
+    </delete>
+
+    <delete id="deleteOrderTypeByIds" parameterType="String">
+        delete from order_type where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
