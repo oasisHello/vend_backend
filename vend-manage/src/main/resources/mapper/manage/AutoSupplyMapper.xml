@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="oasis.vend.manage.mapper.AutoSupplyMapper">
+    
+    <resultMap type="AutoSupply" id="AutoSupplyResult">
+        <result property="id"    column="id"    />
+        <result property="alertValue"    column="alert_value"    />
+    </resultMap>
+
+    <sql id="selectAutoSupplyVo">
+        select id, alert_value from auto_supply
+    </sql>
+
+    <select id="selectAutoSupplyList" parameterType="AutoSupply" resultMap="AutoSupplyResult">
+        <include refid="selectAutoSupplyVo"/>
+        <where>  
+        </where>
+    </select>
+    
+    <select id="selectAutoSupplyById" parameterType="Long" resultMap="AutoSupplyResult">
+        <include refid="selectAutoSupplyVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertAutoSupply" parameterType="AutoSupply" useGeneratedKeys="true" keyProperty="id">
+        insert into auto_supply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="alertValue != null">alert_value,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="alertValue != null">#{alertValue},</if>
+         </trim>
+    </insert>
+
+    <update id="updateAutoSupply" parameterType="AutoSupply">
+        update auto_supply
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="alertValue != null">alert_value = #{alertValue},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteAutoSupplyById" parameterType="Long">
+        delete from auto_supply where id = #{id}
+    </delete>
+
+    <delete id="deleteAutoSupplyByIds" parameterType="String">
+        delete from auto_supply where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
