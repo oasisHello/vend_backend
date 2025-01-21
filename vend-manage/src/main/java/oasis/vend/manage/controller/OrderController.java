@@ -2,6 +2,8 @@ package oasis.vend.manage.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import oasis.vend.manage.domain.custom.OrderCustom;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,7 +44,7 @@ public class OrderController extends BaseController
     public TableDataInfo list(Order order)
     {
         startPage();
-        List<Order> list = orderService.selectOrderList(order);
+        List<OrderCustom> list = orderService.selectOrderCustomList(order);// query the orderCustom
         return getDataTable(list);
     }
 

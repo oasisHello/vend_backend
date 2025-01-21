@@ -1,7 +1,9 @@
 package oasis.vend.manage.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 import oasis.vend.common.utils.DateUtils;
+import oasis.vend.manage.domain.custom.OrderCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import oasis.vend.manage.mapper.OrderMapper;
@@ -15,7 +17,7 @@ import oasis.vend.manage.service.IOrderService;
  * @date 2025-01-20
  */
 @Service
-public class OrderServiceImpl implements IOrderService 
+public class OrderServiceImpl implements IOrderService
 {
     @Autowired
     private OrderMapper orderMapper;
@@ -92,5 +94,14 @@ public class OrderServiceImpl implements IOrderService
     public int deleteOrderById(Long id)
     {
         return orderMapper.deleteOrderById(id);
+    }
+
+    /**
+     * @param order
+     * @return
+     */
+    @Override
+    public List<OrderCustom> selectOrderCustomList(Order order) {
+        return orderMapper.selectOrderCustomList(order);
     }
 }
