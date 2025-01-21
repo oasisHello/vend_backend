@@ -263,5 +263,57 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 ALTER TABLE goods
 ADD UNIQUE (NAME);
+
 ALTER TABLE goods
-ADD UNIQUE (code);
+ADD UNIQUE (CODE);
+
+-- ----------------------- order management---------------------
+CREATE TABLE order_type (
+    id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
+    name VARCHAR(255) NOT NULL COMMENT 'Order type name',
+    parent_type INT DEFAULT NULL COMMENT 'Parent type ID',
+    FOREIGN KEY (parent_type) REFERENCES order_type(id)
+    ON DELETE SET NULL
+) COMMENT = 'Order type table';
+
+ALTER TABLE vending_machine
+ADD UNIQUE (inner_code);
+
+CREATE TABLE `order` (
+    id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
+    code VARCHAR(255) NOT NULL COMMENT 'Order code (date + seq.)',
+    status INT COMMENT 'Status',
+    is_auto_generated INT COMMENT 'Auto-generated (1/0)',
+    vm_inner_code VARCHAR(15) COMMENT 'VM inner code',
+    user_id INT COMMENT 'User ID',
+    user_name VARCHAR(255) COMMENT 'User name',
+    region_id INT COMMENT 'Region ID',
+    `desc` TEXT COMMENT 'Description',
+    type VARCHAR(255) COMMENT 'Order type',
+    assignor_id INT COMMENT 'Assignor ID',
+    addr VARCHAR(255) COMMENT 'Address',
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Creation time',
+    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Update time',
+    
+    FOREIGN KEY (vm_inner_code) REFERENCES vending_machine(inner_code),  -- FK1
+    FOREIGN KEY (user_id) REFERENCES tb_emp(id),  -- Location reference
+    FOREIGN KEY (region_id) REFERENCES region(id)  -- Location reference
+) COMMENT = 'Order table';
+
+
+CREATE TABLE operation_detail (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
+    order_id INT COMMENT 'Order ID',
+    aisle_code VARCHAR(255) COMMENT 'Aisle code',
+    avaliable_capacity INT COMMENT 'Available capacity',
+    goods_id INT COMMENT 'Goods ID',
+    goods_name VARCHAR(255) COMMENT 'Goods name',
+    goods_image VARCHAR(255) COMMENT 'Goods image URL',
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Creation time',
+    update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Update time',
+
+    FOREIGN KEY (order_id) REFERENCES `order`(id) COMMENT 'FK to Order table',
+    FOREIGN KEY (goods_id) REFERENCES goods(id) COMMENT 'FK to Goods table'
+) COMMENT = 'Operation detail table';
+
+
