@@ -158,4 +158,15 @@ public class VendingMachineServiceImpl implements IVendingMachineService {
 	public int deleteVendingMachineById(Long id) {
 		return vendingMachineMapper.deleteVendingMachineById(id);
 	}
+
+	/**
+	 * select the vending machine by inner code
+	 * @param innerCode
+	 * @return
+	 */
+	@Override
+	public VendingMachine selectVendingMachineByInnerCode(String innerCode) {
+		return vendingMachineMapper.selectVendingMachineByInnerCode(innerCode);
+	}
+
 }

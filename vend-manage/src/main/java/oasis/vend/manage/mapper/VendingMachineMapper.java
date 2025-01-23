@@ -58,4 +58,11 @@ public interface VendingMachineMapper
      * @return 结果
      */
     public int deleteVendingMachineByIds(Long[] ids);
+
+    /**
+     * query vending machine by inner code
+     * @param innerCode
+     * @return VendingMachine
+     */
+    public VendingMachine selectVendingMachineByInnerCode(String innerCode);
 }
