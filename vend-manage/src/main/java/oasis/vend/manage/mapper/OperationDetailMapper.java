@@ -2,6 +2,7 @@ package oasis.vend.manage.mapper;
 
 import java.util.List;
 import oasis.vend.manage.domain.OperationDetail;
+import oasis.vend.manage.domain.dto.WorkOrderDto;
 
 /**
  * Operation detail tableMapper接口
@@ -58,4 +59,11 @@ public interface OperationDetailMapper
      * @return 结果
      */
     public int deleteOperationDetailByIds(Long[] ids);
+
+    /**
+     * batch insert operation details
+     * @param details
+     * @return
+     */
+    public int batchInsertOperationDetail(List<OperationDetail> details);
 }
