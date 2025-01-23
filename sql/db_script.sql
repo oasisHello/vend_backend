@@ -218,7 +218,7 @@ CREATE TABLE goods_type (
     update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Updated date'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Product type table';
 
--- Product Table (good)
+-- Product Table (goods)
 CREATE TABLE goods (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'Product ID',
     name VARCHAR(100) NOT NULL COMMENT 'Name',
@@ -272,13 +272,12 @@ CREATE TABLE order_type (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
     name VARCHAR(255) NOT NULL COMMENT 'Order type name',
     parent_type INT DEFAULT NULL COMMENT 'Parent type ID',
-    FOREIGN KEY (parent_type) REFERENCES order_type(id)
-    ON DELETE SET NULL
 ) COMMENT = 'Order type table';
 
 ALTER TABLE vending_machine
 ADD UNIQUE (inner_code);
 
+DROP TABLE if EXISTS `order`;
 CREATE TABLE `order` (
     id INT AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
     code VARCHAR(255) NOT NULL COMMENT 'Order code (date + seq.)',
@@ -286,12 +285,10 @@ CREATE TABLE `order` (
     is_auto_generated INT COMMENT 'Auto-generated (1/0)',
     vm_inner_code VARCHAR(15) COMMENT 'VM inner code',
     user_id INT COMMENT 'User ID',
-    user_name VARCHAR(255) COMMENT 'User name',
     region_id INT COMMENT 'Region ID',
     `desc` TEXT COMMENT 'Description',
     type VARCHAR(255) COMMENT 'Order type',
     assignor_id INT COMMENT 'Assignor ID',
-    addr VARCHAR(255) COMMENT 'Address',
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Creation time',
     update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Update time',
     
@@ -300,20 +297,25 @@ CREATE TABLE `order` (
     FOREIGN KEY (region_id) REFERENCES region(id)  -- Location reference
 ) COMMENT = 'Order table';
 
-
+DROP TABLE if EXISTS operation_detail;
 CREATE TABLE operation_detail (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
+    id INT	 AUTO_INCREMENT PRIMARY KEY COMMENT 'ID',
     order_id INT COMMENT 'Order ID',
     aisle_code VARCHAR(255) COMMENT 'Aisle code',
     avaliable_capacity INT COMMENT 'Available capacity',
-    goods_id INT COMMENT 'Goods ID',
-    goods_name VARCHAR(255) COMMENT 'Goods name',
-    goods_image VARCHAR(255) COMMENT 'Goods image URL',
+    goods_id bigint COMMENT 'Goods ID',
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT 'Creation time',
     update_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Update time',
 
-    FOREIGN KEY (order_id) REFERENCES `order`(id) COMMENT 'FK to Order table',
-    FOREIGN KEY (goods_id) REFERENCES goods(id) COMMENT 'FK to Goods table'
+    FOREIGN KEY (order_id) REFERENCES `order`(id) ,
+    FOREIGN KEY (goods_id) REFERENCES goods(id)
 ) COMMENT = 'Operation detail table';
 
+CREATE TABLE auto_supply (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    alert_value INT
+);
 
+-- NOTE: avoid to use reserved words as indentifier
+ALTER TABLE `order` 
+CHANGE COLUMN `desc` remark TEXT	;
