@@ -2,6 +2,7 @@ package oasis.vend.manage.mapper;
 
 import java.util.List;
 import oasis.vend.manage.domain.Order;
+import oasis.vend.manage.domain.custom.OrderCustom;
 
 /**
  * Order tableMapper接口
@@ -58,4 +59,11 @@ public interface OrderMapper
      * @return 结果
      */
     public int deleteOrderByIds(Long[] ids);
+
+    /**
+     * query order custom list
+     * @param order
+     * @return
+     */
+    public List<OrderCustom> selectOrderCustomList(Order order);
 }

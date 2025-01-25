@@ -2,6 +2,8 @@ package oasis.vend.manage.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import oasis.vend.manage.domain.Order;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,6 +71,15 @@ public class OrderTypeController extends BaseController
         return success(orderTypeService.selectOrderTypeById(id));
     }
 
+    /**
+     *  List order type by parent id
+     */
+    @GetMapping(value = "/listOrderTypeByParentId/{parentId}")
+    public AjaxResult listByParentId(@PathVariable("parentId") Long parentId){
+        OrderType aType = new OrderType();
+        aType.setParentType(parentId);
+        return success(orderTypeService.selectOrderTypeList(aType));
+    }
     /**
      * 新增Order type table
      */

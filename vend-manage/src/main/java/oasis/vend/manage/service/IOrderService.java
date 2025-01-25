@@ -2,6 +2,8 @@ package oasis.vend.manage.service;
 
 import java.util.List;
 import oasis.vend.manage.domain.Order;
+import oasis.vend.manage.domain.custom.OrderCustom;
+import oasis.vend.manage.domain.dto.WorkOrderDto;
 
 /**
  * Order tableService接口
@@ -58,4 +60,19 @@ public interface IOrderService
      * @return 结果
      */
     public int deleteOrderById(Long id);
+
+    /**
+     * query OrderCustom
+     *
+     * @param order
+     * @return
+     */
+    public List<OrderCustom> selectOrderCustomList(Order order);
+
+    /**
+     * Insert work order data transmission object
+     * @param workOrder
+     * @return
+     */
+    public int insertWorkOrder(WorkOrderDto workOrder);
 }

@@ -58,4 +58,11 @@ public interface IOperationDetailService
      * @return 结果
      */
     public int deleteOperationDetailById(Long id);
+
+    /**
+     * batch insert operation detail
+     * @param details
+     * @return
+     */
+     public int batchInsertOperationDetail(List<OperationDetail> details);
 }

@@ -46,7 +46,7 @@ public class Order extends BaseEntity
 
     /** Order type */
     @Excel(name = "Order type")
-    private String type;
+    private Long type;
 
     /** Assignor ID */
     private Long assignorId;
@@ -119,16 +119,16 @@ public class Order extends BaseEntity
         this.desc = desc;
     }
 
-    public String getDesc() 
+    public String getDesc()
     {
         return desc;
     }
-    public void setType(String type) 
+    public void setType(Long type)
     {
         this.type = type;
     }
 
-    public String getType() 
+    public Long getType()
     {
         return type;
     }
