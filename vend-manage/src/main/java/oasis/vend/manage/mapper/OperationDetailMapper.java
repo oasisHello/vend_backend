@@ -66,4 +66,10 @@ public interface OperationDetailMapper
      * @return
      */
     public int batchInsertOperationDetail(List<OperationDetail> details);
+
+    /**
+     * delete operation detail by order id
+     * @return
+     */
+    public int deleteOperationDetailByOrderId();
 }

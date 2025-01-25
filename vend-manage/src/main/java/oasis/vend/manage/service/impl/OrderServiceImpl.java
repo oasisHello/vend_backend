@@ -110,6 +110,7 @@ public class OrderServiceImpl implements IOrderService {
      * @param id Order table主键
      * @return 结果
      */
+    @Transactional
     @Override
     public int deleteOrderById(Long id)
     {

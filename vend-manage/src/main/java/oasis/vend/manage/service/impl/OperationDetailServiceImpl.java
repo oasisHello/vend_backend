@@ -95,4 +95,16 @@ public class OperationDetailServiceImpl implements IOperationDetailService {
     public int batchInsertOperationDetail(List<OperationDetail> details) {
         return operationDetailMapper.batchInsertOperationDetail(details);
     }
+
+    /**
+     * delete operation detail by order
+     *
+     * @param orderId
+     * @return
+     */
+    @Override
+    public int deleteOperationDetailByOrderId(Long orderId) {
+        return operationDetailMapper.deleteOperationDetailByOrderId();
+    }
+
 }

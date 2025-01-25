@@ -5,8 +5,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import oasis.vend.manage.domain.custom.OrderCustom;
 import oasis.vend.manage.domain.dto.WorkOrderDto;
+import oasis.vend.manage.service.IOperationDetailService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -36,6 +38,8 @@ public class OrderController extends BaseController
 {
     @Autowired
     private IOrderService orderService;
+    @Autowired
+    IOperationDetailService operationDetailService;
 
     /**
      * 查询Order table列表
@@ -99,9 +103,22 @@ public class OrderController extends BaseController
      */
     @PreAuthorize("@ss.hasPermi('manage:order:remove')")
     @Log(title = "Order table", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+	@DeleteMapping("/batch/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(orderService.deleteOrderByIds(ids));
+    }
+
+    /**
+     * 删除Order table
+     */
+    @PreAuthorize("@ss.hasPermi('manage:order:remove')")
+    @Log(title = "Order table", businessType = BusinessType.DELETE)
+    @DeleteMapping("/{id}")
+    @Transactional
+    public AjaxResult remove(@PathVariable Long id)
+    {
+        operationDetailService.deleteOperationDetailByOrderId(id);
+        return toAjax(orderService.deleteOrderById(id));
     }
 }
