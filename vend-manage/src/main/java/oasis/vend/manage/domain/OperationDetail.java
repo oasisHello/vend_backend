@@ -28,7 +28,7 @@ public class OperationDetail extends BaseEntity
 
     /** Available capacity */
     @Excel(name = "Available capacity")
-    private Long avaliableCapacity;
+    private Long availableCapacity;
 
     /** Goods ID */
     @Excel(name = "Goods ID")
@@ -61,14 +61,10 @@ public class OperationDetail extends BaseEntity
     {
         return aisleCode;
     }
-    public void setAvaliableCapacity(Long avaliableCapacity) 
-    {
-        this.avaliableCapacity = avaliableCapacity;
-    }
 
-    public Long getAvaliableCapacity() 
+    public Long getAvailableCapacity()
     {
-        return avaliableCapacity;
+        return availableCapacity;
     }
     public void setGoodsId(Long goodsId) 
     {
@@ -86,7 +82,7 @@ public class OperationDetail extends BaseEntity
             .append("id", getId())
             .append("orderId", getOrderId())
             .append("aisleCode", getAisleCode())
-            .append("avaliableCapacity", getAvaliableCapacity())
+            .append("availableCapacity", getAvailableCapacity())
             .append("goodsId", getGoodsId())
             .append("createTime", getCreateTime())
             .append("updateTime", getUpdateTime())

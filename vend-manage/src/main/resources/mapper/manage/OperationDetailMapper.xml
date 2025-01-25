@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="oasis.vend.manage.mapper.OperationDetailMapper">
-    
+
     <resultMap type="OperationDetail" id="OperationDetailResult">
-        <result property="id"    column="id"    />
-        <result property="orderId"    column="order_id"    />
-        <result property="aisleCode"    column="aisle_code"    />
-        <result property="avaliableCapacity"    column="avaliable_capacity"    />
-        <result property="goodsId"    column="goods_id"    />
-        <result property="createTime"    column="create_time"    />
-        <result property="updateTime"    column="update_time"    />
+        <result property="id" column="id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="aisleCode" column="aisle_code"/>
+        <result property="availableCapacity" column="available_capacity"/>
+        <result property="goodsId" column="goods_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
     </resultMap>
 
     <sql id="selectOperationDetailVo">
-        select id, order_id, aisle_code, avaliable_capacity, goods_id, create_time, update_time from operation_detail
+        select id, order_id, aisle_code, available_capacity, goods_id, create_time, update_time from operation_detail
     </sql>
 
     <select id="selectOperationDetailList" parameterType="OperationDetail" resultMap="OperationDetailResult">
         <include refid="selectOperationDetailVo"/>
-        <where>  
+        <where>
         </where>
     </select>
-    
+
     <select id="selectOperationDetailById" parameterType="Long" resultMap="OperationDetailResult">
         <include refid="selectOperationDetailVo"/>
         where id = #{id}
@@ -34,19 +34,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="orderId != null">order_id,</if>
             <if test="aisleCode != null">aisle_code,</if>
-            <if test="avaliableCapacity != null">avaliable_capacity,</if>
+            <if test="availableCapacity != null">available_capacity,</if>
             <if test="goodsId != null">goods_id,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
-         </trim>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="orderId != null">#{orderId},</if>
             <if test="aisleCode != null">#{aisleCode},</if>
-            <if test="avaliableCapacity != null">#{avaliableCapacity},</if>
+            <if test="availableCapacity != null">#{availableCapacity},</if>
             <if test="goodsId != null">#{goodsId},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
-         </trim>
+        </trim>
     </insert>
     <insert id="batchInsertOperationDetail" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
         insert into operation_detail
@@ -72,7 +72,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="orderId != null">order_id = #{orderId},</if>
             <if test="aisleCode != null">aisle_code = #{aisleCode},</if>
-            <if test="avaliableCapacity != null">avaliable_capacity = #{avaliableCapacity},</if>
+            <if test="availableCapacity != null">available_capacity = #{availableCapacity},</if>
             <if test="goodsId != null">goods_id = #{goodsId},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
@@ -85,7 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteOperationDetailByIds" parameterType="String">
-        delete from operation_detail where id in 
+        delete from operation_detail where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
