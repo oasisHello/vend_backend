@@ -75,6 +75,10 @@ public class OperationDetail extends BaseEntity
     {
         return goodsId;
     }
+    public void setAvailableCapacity(Long availableCapacity)
+    {
+        this.availableCapacity=availableCapacity;
+    }
 
     @Override
     public String toString() {

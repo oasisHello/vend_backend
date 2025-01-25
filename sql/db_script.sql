@@ -319,3 +319,6 @@ CREATE TABLE auto_supply (
 -- NOTE: avoid to use reserved words as indentifier
 ALTER TABLE `order` 
 CHANGE COLUMN `desc` remark TEXT	;
+
+ALTER TABLE `operation_detail` 
+CHANGE COLUMN `avaliable_capacity` available_capacity TEXT	;

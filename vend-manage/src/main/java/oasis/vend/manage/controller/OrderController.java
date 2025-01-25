@@ -4,6 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import oasis.vend.manage.domain.custom.OrderCustom;
+import oasis.vend.manage.domain.dto.WorkOrderDto;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -77,9 +78,9 @@ public class OrderController extends BaseController
     @PreAuthorize("@ss.hasPermi('manage:order:add')")
     @Log(title = "Order table", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Order order)
+    public AjaxResult add(@RequestBody WorkOrderDto workOrderDto)
     {
-        return toAjax(orderService.insertOrder(order));
+        return toAjax(orderService.insertWorkOrder(workOrderDto));
     }
 
     /**

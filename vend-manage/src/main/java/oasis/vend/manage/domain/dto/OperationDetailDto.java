@@ -11,8 +11,5 @@ public class OperationDetailDto {
     private Long availableCapacity;
     @JsonProperty("goodsId")
     private Long goodsId;
-    @JsonProperty("goodsName")
-    public  String goodsName;
-    @JsonProperty("goodsImage")
-    public  String goodsImage;
+
 }

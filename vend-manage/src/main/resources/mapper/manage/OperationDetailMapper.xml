@@ -50,18 +50,17 @@
     </insert>
     <insert id="batchInsertOperationDetail" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
         insert into operation_detail
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            order_id, aisle_code, avaliable_capacity, goods_id, create_time, update_time
-        </trim>
+        (
+        order_id, aisle_code, available_capacity, goods_id, create_time, update_time)
         values
         <foreach collection="list" item="item" separator=",">
             (
-            <if test="item.orderId != null">#{item.orderId},</if>
-            <if test="item.aisleCode != null">#{item.aisleCode},</if>
-            <if test="item.avaliableCapacity != null">#{item.avaliableCapacity},</if>
-            <if test="item.goodsId != null">#{item.goodsId},</if>
-            <if test="item.createTime != null">#{item.createTime},</if>
-            <if test="item.updateTime != null">#{item.updateTime}</if>
+            #{item.orderId},
+            #{item.aisleCode},
+            #{item.availableCapacity},
+            #{item.goodsId},
+            #{item.createTime},
+            #{item.updateTime}
             )
         </foreach>
     </insert>
