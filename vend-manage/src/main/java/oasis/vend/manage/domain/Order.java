@@ -42,7 +42,7 @@ public class Order extends BaseEntity
     private Long regionId;
 
     /** Description */
-    private String desc;
+    private String description;
 
     /** Order type */
     @Excel(name = "Order type")
@@ -114,14 +114,14 @@ public class Order extends BaseEntity
     {
         return regionId;
     }
-    public void setDesc(String desc) 
+    public void setDescription(String desc)
     {
-        this.desc = desc;
+        this.description = desc;
     }
 
-    public String getDesc()
+    public String getDescription()
     {
-        return desc;
+        return description;
     }
     public void setType(Long type)
     {
@@ -152,7 +152,7 @@ public class Order extends BaseEntity
             .append("vmInnerCode", getVmInnerCode())
             .append("userId", getUserId())
             .append("regionId", getRegionId())
-            .append("desc", getDesc())
+            .append("desc", getDescription())
             .append("type", getType())
             .append("assignorId", getAssignorId())
             .append("createTime", getCreateTime())

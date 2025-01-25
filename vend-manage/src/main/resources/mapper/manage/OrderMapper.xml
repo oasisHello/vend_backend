@@ -12,7 +12,7 @@
         <result property="vmInnerCode" column="vm_inner_code"/>
         <result property="userId" column="user_id"/>
         <result property="regionId" column="region_id"/>
-        <result property="desc" column="remark"/>
+        <result property="description" column="description"/>
         <result property="type" column="type"/>
         <result property="assignorId" column="assignor_id"/>
         <result property="createTime" column="create_time"/>
@@ -26,7 +26,7 @@
         <result property="vmInnerCode" column="vm_inner_code"/>
         <result property="userId" column="user_id"/>
         <result property="regionId" column="region_id"/>
-        <result property="desc" column="remark"/>
+        <result property="description" column="description"/>
         <result property="type" column="type"/>
         <result property="assignorId" column="assignor_id"/>
         <result property="createTime" column="create_time"/>
@@ -36,7 +36,7 @@
     </resultMap>
 
     <sql id="selectOrderVo">
-        select o.id, o.code, o.status, o.is_auto_generated, o.vm_inner_code, o.user_id, o.region_id, o.remark, o.type, o.assignor_id,
+        select o.id, o.code, o.status, o.is_auto_generated, o.vm_inner_code, o.user_id, o.region_id, o.description, o.type, o.assignor_id,
         o.create_time, o.update_time from `order` o
     </sql>
 
@@ -62,7 +62,7 @@
             <if test="vmInnerCode != null">vm_inner_code,</if>
             <if test="userId != null">user_id,</if>
             <if test="regionId != null">region_id,</if>
-            <if test="desc != null">remark,</if>
+            <if test="description != null">description,</if>
             <if test="type != null">type,</if>
             <if test="assignorId != null">assignor_id,</if>
             <if test="createTime != null">create_time,</if>
@@ -75,7 +75,7 @@
             <if test="vmInnerCode != null">#{vmInnerCode},</if>
             <if test="userId != null">#{userId},</if>
             <if test="regionId != null">#{regionId},</if>
-            <if test="desc != null">#{desc},</if>
+            <if test="description != null">#{description},</if>
             <if test="type != null">#{type},</if>
             <if test="assignorId != null">#{assignorId},</if>
             <if test="createTime != null">#{createTime},</if>
@@ -92,7 +92,7 @@
             <if test="vmInnerCode != null">vm_inner_code = #{vmInnerCode},</if>
             <if test="userId != null">user_id = #{userId},</if>
             <if test="regionId != null">region_id = #{regionId},</if>
-            <if test="desc != null">`desc` = #{desc},</if>
+            <if test="description != null">description = #{description},</if>
             <if test="type != null">type = #{type},</if>
             <if test="assignorId != null">assignor_id = #{assignorId},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
