@@ -82,13 +82,31 @@ public class OrderServiceImpl implements IOrderService {
     /**
      * 修改Order table
      *
-     * @param order Order table
+     * @param workOrderDto Order table
      * @return 结果
      */
     @Override
-    public int updateOrder(Order order)
-    {
-        order.setUpdateTime(DateUtils.getNowDate());
+    public int updateOrder(WorkOrderDto workOrderDto) {
+        // dto->domain
+        // workOrderDto -> order
+        Order order = BeanUtil.copyProperties(workOrderDto, Order.class);
+        // 4.Only Operation Order
+        // OperationDetailDto -> Operation
+        if (workOrderDto.getCreateType() == ORDER_OPERATOR) {
+            List<OperationDetailDto> detailDtos = workOrderDto.getDetails();
+
+            // Check not null
+            if (detailDtos != null && !detailDtos.isEmpty()) {
+                List<OperationDetail> detailList = detailDtos.stream().map(dto -> {
+                    return BeanUtil.copyProperties(dto, OperationDetail.class);
+                }).collect(Collectors.toList());
+                operationDetailService.batchInsertOperationDetail(detailList);
+
+            } else {
+                throw new ServiceException("Supply detail is empty!");
+            }
+        }
+
         return orderMapper.updateOrder(order);
     }
 

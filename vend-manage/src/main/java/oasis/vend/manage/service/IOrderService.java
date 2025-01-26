@@ -43,7 +43,7 @@ public interface IOrderService
      * @param order Order table
      * @return 结果
      */
-    public int updateOrder(Order order);
+    public int updateOrder(WorkOrderDto order);
 
     /**
      * 批量删除Order table
