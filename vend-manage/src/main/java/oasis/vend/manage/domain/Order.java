@@ -46,7 +46,7 @@ public class Order extends BaseEntity
 
     /** Order type */
     @Excel(name = "Order type")
-    private Long type;
+    private Long typeId;
 
     /** Assignor ID */
     private Long assignorId;
@@ -123,14 +123,14 @@ public class Order extends BaseEntity
     {
         return description;
     }
-    public void setType(Long type)
+    public void setTypeId(Long type)
     {
-        this.type = type;
+        this.typeId = type;
     }
 
-    public Long getType()
+    public Long getTypeId()
     {
-        return type;
+        return typeId;
     }
     public void setAssignorId(Long assignorId) 
     {
@@ -153,7 +153,7 @@ public class Order extends BaseEntity
             .append("userId", getUserId())
             .append("regionId", getRegionId())
             .append("desc", getDescription())
-            .append("type", getType())
+            .append("typeId", getTypeId())
             .append("assignorId", getAssignorId())
             .append("createTime", getCreateTime())
             .append("updateTime", getUpdateTime())

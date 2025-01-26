@@ -13,7 +13,7 @@
         <result property="userId" column="user_id"/>
         <result property="regionId" column="region_id"/>
         <result property="description" column="description"/>
-        <result property="type" column="type"/>
+        <result property="typeId" column="type_id"/>
         <result property="assignorId" column="assignor_id"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
@@ -27,16 +27,16 @@
         <result property="userId" column="user_id"/>
         <result property="regionId" column="region_id"/>
         <result property="description" column="description"/>
-        <result property="type" column="type"/>
+        <result property="typeId" column="type_id"/>
         <result property="assignorId" column="assignor_id"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
-        <association property="orderType" javaType="OrderType" column="type"
+        <association property="orderType" javaType="OrderType" column="type_id"
                      select="oasis.vend.manage.mapper.OrderTypeMapper.selectOrderTypeById"/>
     </resultMap>
 
     <sql id="selectOrderVo">
-        select o.id, o.code, o.status, o.is_auto_generated, o.vm_inner_code, o.user_id, o.region_id, o.description, o.type, o.assignor_id,
+        select o.id, o.code, o.status, o.is_auto_generated, o.vm_inner_code, o.user_id, o.region_id, o.description, o.type_id, o.assignor_id,
         o.create_time, o.update_time from `order` o
     </sql>
 
@@ -63,7 +63,7 @@
             <if test="userId != null">user_id,</if>
             <if test="regionId != null">region_id,</if>
             <if test="description != null">description,</if>
-            <if test="type != null">type,</if>
+            <if test="typeId != null">type_id,</if>
             <if test="assignorId != null">assignor_id,</if>
             <if test="createTime != null">create_time,</if>
             <if test="updateTime != null">update_time,</if>
@@ -76,7 +76,7 @@
             <if test="userId != null">#{userId},</if>
             <if test="regionId != null">#{regionId},</if>
             <if test="description != null">#{description},</if>
-            <if test="type != null">#{type},</if>
+            <if test="typeId != null">#{typeId},</if>
             <if test="assignorId != null">#{assignorId},</if>
             <if test="createTime != null">#{createTime},</if>
             <if test="updateTime != null">#{updateTime},</if>
@@ -93,7 +93,7 @@
             <if test="userId != null">user_id = #{userId},</if>
             <if test="regionId != null">region_id = #{regionId},</if>
             <if test="description != null">description = #{description},</if>
-            <if test="type != null">type = #{type},</if>
+            <if test="typeId != null">type_id = #{typeId},</if>
             <if test="assignorId != null">assignor_id = #{assignorId},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
@@ -113,11 +113,11 @@
     </delete>
     <select id="selectOrderCustomList" resultMap="OrderCustomResult">
         <include refid="selectOrderVo"/>
-        LEFT JOIN order_type ot ON `o`.type = ot.id
+        LEFT JOIN order_type ot ON `o`.type_id = ot.id
         <where>
             <if test="code != null  and code != ''">and code = #{code}</if>
             <if test="status != null ">and status = #{status}</if>
-            <if test="type != null">and type = #{type}</if>
+            <if test="typeId != null">and type_id = #{typeId}</if>
             <if test="params != null and params.parentTypeId != null">and parent_type = #{params.parentTypeId}</if>
         </where>
     </select>
