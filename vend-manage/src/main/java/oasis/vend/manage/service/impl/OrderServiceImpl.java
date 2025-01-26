@@ -1,14 +1,17 @@
 package oasis.vend.manage.service.impl;
 
+import java.time.Duration;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.util.StrUtil;
 import oasis.vend.common.constant.VM;
 import oasis.vend.common.exception.ServiceException;
 import oasis.vend.common.utils.DateUtils;
+import oasis.vend.common.utils.StringUtils;
 import oasis.vend.common.utils.uuid.UUIDUtils;
 import oasis.vend.manage.domain.OperationDetail;
 import oasis.vend.manage.domain.VendingMachine;
@@ -19,11 +22,13 @@ import oasis.vend.manage.mapper.VendingMachineMapper;
 import oasis.vend.manage.service.IOperationDetailService;
 import oasis.vend.manage.service.IVendingMachineService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import oasis.vend.manage.mapper.OrderMapper;
 import oasis.vend.manage.domain.Order;
 import oasis.vend.manage.service.IOrderService;
 import org.springframework.transaction.annotation.Transactional;
+import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
 import static oasis.vend.common.constant.VM.*;
 
@@ -41,6 +46,8 @@ public class OrderServiceImpl implements IOrderService {
     private IVendingMachineService vmService;
     @Autowired
     private IOperationDetailService operationDetailService;
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 查询Order table
@@ -179,6 +186,8 @@ public class OrderServiceImpl implements IOrderService {
         order.setCreateTime(DateUtils.getNowDate());
         order.setCode(UUIDUtils.getUUID());// NOTE:temporally
         order.setStatus(ORDER_STATUS_PEND);
+        // generate work order code(e.g.,202501250001)
+        order.setCode(generateOrderCode());
         // 3. save this order
         int i = orderMapper.insertOrder(order);
 
@@ -234,4 +243,17 @@ public class OrderServiceImpl implements IOrderService {
         return Objects.equals(vmStatus, STATUS_UNDEPLOY);
     }
 
+    private String generateOrderCode() {
+        // Current datatime:yyyyMMdd
+        String dateStr = DateUtils.getDate().replaceAll("-", "");
+        //2.generate redis key by data
+        String redisKey = "oasis.vend.manage.order" + dateStr;
+        // redis key exists,
+        if (!redisTemplate.hasKey(redisKey)) {
+            redisTemplate.opsForValue().set(redisKey, 1, Duration.ofDays(1));
+            return dateStr + "0001";
+        }
+        // redis key not exists
+        return dateStr + StrUtil.padPre(redisTemplate.opsForValue().increment(redisKey).toString(), 4, '0');
+    }
 }
