@@ -3,6 +3,7 @@ package oasis.vend.manage.mapper;
 import java.util.List;
 import oasis.vend.manage.domain.Order;
 import oasis.vend.manage.domain.custom.OrderCustom;
+import oasis.vend.manage.domain.dto.WorkOrderDto;
 
 /**
  * Order tableMapper接口

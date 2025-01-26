@@ -73,4 +73,10 @@ public interface IOperationDetailService
      */
      public int deleteOperationDetailByOrderId(Long orderId);
 
+    /**
+     * select OperationDetail By Order Id
+     * @param orderId
+     * @return
+     */
+     public List<OperationDetail> selectOperationDetailByOrderId(Long orderId);
 }

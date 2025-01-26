@@ -1,9 +1,13 @@
 package oasis.vend.manage.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
+import cn.hutool.core.bean.BeanUtil;
+import oasis.vend.manage.domain.OperationDetail;
 import oasis.vend.manage.domain.custom.OrderCustom;
+import oasis.vend.manage.domain.dto.OperationDetailDto;
 import oasis.vend.manage.domain.dto.WorkOrderDto;
 import oasis.vend.manage.service.IOperationDetailService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -93,7 +97,7 @@ public class OrderController extends BaseController
     @PreAuthorize("@ss.hasPermi('manage:order:edit')")
     @Log(title = "Order table", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Order order)
+    public AjaxResult edit(@RequestBody WorkOrderDto order)
     {
         return toAjax(orderService.updateOrder(order));
     }
@@ -116,9 +120,28 @@ public class OrderController extends BaseController
     @Log(title = "Order table", businessType = BusinessType.DELETE)
     @DeleteMapping("/{id}")
     @Transactional
-    public AjaxResult remove(@PathVariable Long id)
-    {
+    public AjaxResult remove(@PathVariable Long id) {
         operationDetailService.deleteOperationDetailByOrderId(id);
         return toAjax(orderService.deleteOrderById(id));
+    }
+
+    /**
+     * 获取Order table详细信息
+     */
+    @PreAuthorize("@ss.hasPermi('manage:order:query')")
+    @GetMapping(value = "/operation/{id}")
+    public AjaxResult getOperationOrderWithDetail(@PathVariable("id") Long id) {
+        WorkOrderDto operationOrderDto = new WorkOrderDto();
+        //1. get operation details by order id
+        List<OperationDetail> operationDetails = operationDetailService.selectOperationDetailByOrderId(id);
+        //2. get order
+        Order order = orderService.selectOrderById(id);
+
+        operationOrderDto = BeanUtil.copyProperties(order, WorkOrderDto.class);
+        List<OperationDetailDto> dtoList = operationDetails.stream().map(detail -> {
+            return BeanUtil.copyProperties(detail, OperationDetailDto.class);
+        }).collect(Collectors.toList());
+        operationOrderDto.setDetails(dtoList);
+        return success(operationOrderDto);
     }
 }

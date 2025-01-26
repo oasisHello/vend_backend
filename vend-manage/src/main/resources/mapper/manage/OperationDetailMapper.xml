@@ -93,4 +93,9 @@
     <delete id="deleteOperationDetailByOrderId" parameterType="Long">
         delete from operation_detail where order_id = #{orderId}
     </delete>
+
+    <select id="selectOperationDetailsByOrderId" parameterType="OperationDetail" resultMap="OperationDetailResult">
+        <include refid="selectOperationDetailVo"/>
+        where order_id = #{orderId}
+    </select>
 </mapper>

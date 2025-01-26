@@ -10,10 +10,14 @@ import java.util.List;
  */
 @Data
 public class WorkOrderDto {
+    @JsonProperty("id")
+    private Long id;
     @JsonProperty("createType")
     private Long createType;
     @JsonProperty("vmInnerCode")
     private String vmInnerCode;
+    @JsonProperty("regionId")
+    private Long regionId;
     @JsonProperty("userId")
     private Long userId;
     @JsonProperty("assignorId")

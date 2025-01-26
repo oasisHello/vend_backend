@@ -72,4 +72,11 @@ public interface OperationDetailMapper
      * @return
      */
     public int deleteOperationDetailByOrderId();
+
+    /**
+     * select operation details by order id
+     * @param orderId
+     * @return
+     */
+    List<OperationDetail> selectOperationDetailsByOrderId(Long orderId);
 }

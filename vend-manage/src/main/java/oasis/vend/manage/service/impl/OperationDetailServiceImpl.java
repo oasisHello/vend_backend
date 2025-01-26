@@ -1,5 +1,6 @@
 package oasis.vend.manage.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 import oasis.vend.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +106,17 @@ public class OperationDetailServiceImpl implements IOperationDetailService {
     @Override
     public int deleteOperationDetailByOrderId(Long orderId) {
         return operationDetailMapper.deleteOperationDetailByOrderId();
+    }
+
+    /**
+     * select operation details by order id
+     *
+     * @param orderId
+     * @return
+     */
+    @Override
+    public List<OperationDetail> selectOperationDetailByOrderId(Long orderId) {
+        return operationDetailMapper.selectOperationDetailsByOrderId(orderId);
     }
 
 }
