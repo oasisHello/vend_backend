@@ -88,6 +88,8 @@ public class OrderController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody WorkOrderDto workOrderDto)
     {
+        //set assignor id by sys
+        workOrderDto.setAssignorId(getUserId());
         return toAjax(orderService.insertWorkOrder(workOrderDto));
     }
 
