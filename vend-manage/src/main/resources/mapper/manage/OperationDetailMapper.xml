@@ -67,16 +67,14 @@
 
 
     <update id="updateOperationDetail" parameterType="OperationDetail">
-        update operation_detail
+        UPDATE operation_detail
         <trim prefix="SET" suffixOverrides=",">
-            <if test="orderId != null">order_id = #{orderId},</if>
             <if test="aisleCode != null">aisle_code = #{aisleCode},</if>
             <if test="availableCapacity != null">available_capacity = #{availableCapacity},</if>
             <if test="goodsId != null">goods_id = #{goodsId},</if>
-            <if test="createTime != null">create_time = #{createTime},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
         </trim>
-        where id = #{id}
+        WHERE order_id = #{orderId} AND aisle_code = #{aisleCode}
     </update>
 
     <delete id="deleteOperationDetailById" parameterType="Long">

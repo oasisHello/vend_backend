@@ -79,4 +79,11 @@ public interface IOperationDetailService
      * @return
      */
      public List<OperationDetail> selectOperationDetailByOrderId(Long orderId);
+
+    /**
+     * update OperationDetail in a batch way
+     * @param operationDetails
+     * @return
+     */
+     public int batchUpdateOperationDetail(List<OperationDetail> operationDetails);
 }

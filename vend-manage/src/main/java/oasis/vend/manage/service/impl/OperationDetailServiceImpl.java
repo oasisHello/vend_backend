@@ -1,13 +1,13 @@
 package oasis.vend.manage.service.impl;
 
-import java.util.Collections;
-import java.util.List;
 import oasis.vend.common.utils.DateUtils;
+import oasis.vend.manage.domain.OperationDetail;
+import oasis.vend.manage.mapper.OperationDetailMapper;
+import oasis.vend.manage.service.IOperationDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import oasis.vend.manage.mapper.OperationDetailMapper;
-import oasis.vend.manage.domain.OperationDetail;
-import oasis.vend.manage.service.IOperationDetailService;
+
+import java.util.List;
 
 /**
  * Operation detail tableService业务层处理
@@ -97,6 +97,10 @@ public class OperationDetailServiceImpl implements IOperationDetailService {
         return operationDetailMapper.batchInsertOperationDetail(details);
     }
 
+/**
+ *
+ */
+
     /**
      * delete operation detail by order
      *
@@ -119,4 +123,17 @@ public class OperationDetailServiceImpl implements IOperationDetailService {
         return operationDetailMapper.selectOperationDetailsByOrderId(orderId);
     }
 
+    /**
+     * @param operationDetails
+     * @return
+     */
+    @Override
+    public int batchUpdateOperationDetail(List<OperationDetail> operationDetails) {
+        int count = 0;
+        for (OperationDetail detail : operationDetails) {
+            operationDetailMapper.updateOperationDetail(detail);
+            count++;
+        }
+        return count;
+    }
 }

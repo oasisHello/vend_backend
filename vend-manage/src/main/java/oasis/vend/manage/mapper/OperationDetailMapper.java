@@ -45,6 +45,13 @@ public interface OperationDetailMapper
     public int updateOperationDetail(OperationDetail operationDetail);
 
     /**
+     * update operation detail in a batch way.
+     * @param OperationDetailList
+     * @return
+     */
+    public int batchUpdateOperationDetail(List<OperationDetail> OperationDetailList);
+
+    /**
      * 删除Operation detail table
      * 
      * @param id Operation detail table主键
