@@ -105,9 +105,11 @@ public class OrderServiceImpl implements IOrderService {
             // Check not null
             if (detailDtos != null && !detailDtos.isEmpty()) {
                 List<OperationDetail> detailList = detailDtos.stream().map(dto -> {
-                    return BeanUtil.copyProperties(dto, OperationDetail.class);
+                    OperationDetail detail= BeanUtil.copyProperties(dto, OperationDetail.class);
+                    detail.setOrderId(workOrderDto.getId());
+                    return detail;
                 }).collect(Collectors.toList());
-                operationDetailService.batchInsertOperationDetail(detailList);
+                operationDetailService.batchUpdateOperationDetail(detailList);
 
             } else {
                 throw new ServiceException("Supply detail is empty!");
@@ -166,13 +168,13 @@ public class OrderServiceImpl implements IOrderService {
 
         //2. Order Assembly
         Order order = new Order();
-        order.setStatus(ORDER_STATUS_ACCEPTED);
+        order.setStatus(ORDER_STATUS_PEND);
         order.setVmInnerCode(vm.getInnerCode());
         order.setTypeId(workOrder.getTypeId());
 
         // 2.Same order?(by status,vmInnerCode, typeId)
         //2.2 call mapper
-        List<Order> any = orderMapper.selectOrderList(order);
+        List<OrderCustom> any = orderMapper.selectOrderCustomList(order);
         //2.3 if any is not null
         if (any != null && !any.isEmpty()) {
             throw new ServiceException("Same order already exists!");
