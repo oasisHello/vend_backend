@@ -35,6 +35,8 @@ public class WorkOrderDto {
     private Date createTime;
     @JsonProperty("updateTime")
     private Date updateTime;
+    @JsonProperty("code")
+    private String code;
     // valid when work order type is operation
     @JsonProperty("details") // NOTE: should be consistent the frontend like form to render or receive data.
     private List<OperationDetailDto> details;
