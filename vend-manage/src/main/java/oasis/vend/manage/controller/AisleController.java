@@ -1,5 +1,9 @@
 package oasis.vend.manage.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,10 +27,11 @@ import oasis.vend.common.core.page.TableDataInfo;
 
 /**
  * Aisle InformationController
- * 
+ *
  * @author oasis
  * @date 2025-01-07
  */
+@Api(tags = "Aisle Management")  // Tag for Knife4J API grouping
 @RestController
 @RequestMapping("/manage/aisle")
 public class AisleController extends BaseController
@@ -35,8 +40,9 @@ public class AisleController extends BaseController
     private IAisleService aisleService;
 
     /**
-     * 查询Aisle Information列表
+     * Query Aisle Information List
      */
+    @ApiOperation(value = "Get aisle list", notes = "Retrieve the list of aisles")
     @PreAuthorize("@ss.hasPermi('manage:aisle:list')")
     @GetMapping("/list")
     public TableDataInfo list(Aisle aisle)
@@ -47,8 +53,9 @@ public class AisleController extends BaseController
     }
 
     /**
-     * 导出Aisle Information列表
+     * Export Aisle Information List
      */
+    @ApiOperation(value = "Export aisle list", notes = "Export the aisle list as an Excel file")
     @PreAuthorize("@ss.hasPermi('manage:aisle:export')")
     @Log(title = "Aisle Information", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -56,12 +63,13 @@ public class AisleController extends BaseController
     {
         List<Aisle> list = aisleService.selectAisleList(aisle);
         ExcelUtil<Aisle> util = new ExcelUtil<Aisle>(Aisle.class);
-        util.exportExcel(response, list, "Aisle Information数据");
+        util.exportExcel(response, list, "Aisle Information Data");
     }
 
     /**
-     * 获取Aisle Information详细信息
+     * Get Aisle Information Details
      */
+    @ApiOperation(value = "Get aisle details", notes = "Get detailed information of a specific aisle by ID")
     @PreAuthorize("@ss.hasPermi('manage:aisle:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
@@ -70,8 +78,9 @@ public class AisleController extends BaseController
     }
 
     /**
-     * 新增Aisle Information
+     * Add Aisle Information
      */
+    @ApiOperation(value = "Add new aisle", notes = "Add a new aisle information")
     @PreAuthorize("@ss.hasPermi('manage:aisle:add')")
     @Log(title = "Aisle Information", businessType = BusinessType.INSERT)
     @PostMapping
@@ -81,8 +90,9 @@ public class AisleController extends BaseController
     }
 
     /**
-     * 修改Aisle Information
+     * Edit Aisle Information
      */
+    @ApiOperation(value = "Edit aisle", notes = "Edit an existing aisle information")
     @PreAuthorize("@ss.hasPermi('manage:aisle:edit')")
     @Log(title = "Aisle Information", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -92,22 +102,28 @@ public class AisleController extends BaseController
     }
 
     /**
-     * 删除Aisle Information
+     * Delete Aisle Information
      */
+    @ApiOperation(value = "Delete aisle", notes = "Delete a specified aisle information")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "ids", value = "Aisle IDs to be deleted", required = true, dataType = "Long[]", paramType = "path")
+    })
     @PreAuthorize("@ss.hasPermi('manage:aisle:remove')")
     @Log(title = "Aisle Information", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(aisleService.deleteAisleByIds(ids));
     }
 
     /**
-     * List the AisleCustom
+     * Get AisleCustom List
      */
+    @ApiOperation(value = "Get AisleCustom list", notes = "Get the list of AisleCustom based on innerCode")
     @PreAuthorize("@ss.hasPermi('manage:aisle:list')")
     @GetMapping(value = "/list/{innerCode}")
-    public AjaxResult getAisleCustomList(@PathVariable("innerCode") String innerCode){
-        return success(aisleService.selectAisleCustomByinnerCode(innerCode));
+    public AjaxResult getAisleCustomList(@PathVariable("innerCode") String innerCode)
+    {
+        return success(aisleService.selectAisleCustomByInnerCode(innerCode));
     }
 }
