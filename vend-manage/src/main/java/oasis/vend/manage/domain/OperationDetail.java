@@ -1,95 +1,91 @@
 package oasis.vend.manage.domain;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import oasis.vend.common.annotation.Excel;
 import oasis.vend.common.core.domain.BaseEntity;
 
 /**
- * Operation detail table对象 operation_detail
- * 
+ * Operation Detail Table Object (operation_detail)
+ *
+ * Represents the details of operations in the system.
+ *
  * @author oasis
  * @date 2025-01-20
  */
-public class OperationDetail extends BaseEntity
-{
+@ApiModel(description = "Details about the operation")
+public class OperationDetail extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
-    /** ID */
+    /** Unique identifier */
+    @ApiModelProperty(value = "Unique identifier of the operation detail", example = "1")
     private Long id;
 
-    /** Order ID */
+    /** Order identifier */
+    @ApiModelProperty(value = "Identifier of the associated order", example = "12345")
     @Excel(name = "Order ID")
     private Long orderId;
 
-    /** Aisle code */
-    @Excel(name = "Aisle code")
+    /** Code of the aisle */
+    @ApiModelProperty(value = "Code of the aisle where the operation occurred", example = "A01")
+    @Excel(name = "Aisle Code")
     private String aisleCode;
 
-    /** Available capacity */
-    @Excel(name = "Available capacity")
+    /** Remaining capacity in the aisle */
+    @ApiModelProperty(value = "Available capacity in the aisle", example = "50")
+    @Excel(name = "Available Capacity")
     private Long availableCapacity;
 
-    /** Goods ID */
+    /** Identifier for the goods */
+    @ApiModelProperty(value = "Identifier of the goods associated with the operation", example = "67890")
     @Excel(name = "Goods ID")
     private Long goodsId;
 
-    public void setId(Long id) 
-    {
+    // Getters and setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getId() 
-    {
-        return id;
+    public Long getOrderId() {
+        return orderId;
     }
-    public void setOrderId(Long orderId) 
-    {
+
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 
-    public Long getOrderId() 
-    {
-        return orderId;
-    }
-    public void setAisleCode(String aisleCode) 
-    {
-        this.aisleCode = aisleCode;
-    }
-
-    public String getAisleCode() 
-    {
+    public String getAisleCode() {
         return aisleCode;
     }
 
-    public Long getAvailableCapacity()
-    {
-        return availableCapacity;
-    }
-    public void setGoodsId(Long goodsId) 
-    {
-        this.goodsId = goodsId;
+    public void setAisleCode(String aisleCode) {
+        this.aisleCode = aisleCode;
     }
 
-    public Long getGoodsId() 
-    {
+    public Long getAvailableCapacity() {
+        return availableCapacity;
+    }
+
+    public void setAvailableCapacity(Long availableCapacity) {
+        this.availableCapacity = availableCapacity;
+    }
+
+    public Long getGoodsId() {
         return goodsId;
     }
-    public void setAvailableCapacity(Long availableCapacity)
-    {
-        this.availableCapacity=availableCapacity;
+
+    public void setGoodsId(Long goodsId) {
+        this.goodsId = goodsId;
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("orderId", getOrderId())
-            .append("aisleCode", getAisleCode())
-            .append("availableCapacity", getAvailableCapacity())
-            .append("goodsId", getGoodsId())
-            .append("createTime", getCreateTime())
-            .append("updateTime", getUpdateTime())
-            .toString();
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
 }
