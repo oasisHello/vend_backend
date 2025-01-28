@@ -149,7 +149,7 @@
     </select>
 
     <!-- SQL Query -->
-    <select id="selectAisleCustomByinnerCode" resultMap="AisleCustomResultMap">
+    <select id="selectAisleCustomByInnerCode" resultMap="AisleCustomResultMap">
      <include refid="selectAisleVo"/>
         where inner_code=#{innerCode}
     </select>

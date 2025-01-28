@@ -111,7 +111,7 @@ public class AisleServiceImpl implements IAisleService {
 	 * @param innerCode
 	 * @return
 	 */
-	public List<AisleCustom> selectAisleCustomByinnerCode(String innerCode) {
-		return aisleMapper.selectAisleCustomByinnerCode(innerCode);
+	public List<AisleCustom> selectAisleCustomByInnerCode(String innerCode) {
+		return aisleMapper.selectAisleCustomByInnerCode(innerCode);
 	}
 }

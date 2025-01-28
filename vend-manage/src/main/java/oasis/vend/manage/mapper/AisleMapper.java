@@ -81,5 +81,5 @@ public interface AisleMapper {
 	 * @param innerCode
 	 * @return
 	 */
-    public List<AisleCustom> selectAisleCustomByinnerCode(String innerCode);
+    public List<AisleCustom> selectAisleCustomByInnerCode(String innerCode);
 }

@@ -80,5 +80,5 @@ public interface IAisleService
      * @return aisleCustom
      */
 
-    public List<AisleCustom> selectAisleCustomByinnerCode(String innerCode);
+    public List<AisleCustom> selectAisleCustomByInnerCode(String innerCode);
 }
