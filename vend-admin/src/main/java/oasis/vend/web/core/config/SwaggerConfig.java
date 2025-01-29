@@ -115,7 +115,7 @@ public class SwaggerConfig
                 // 设置标题
                 .title("Vending Machine Management")
                 // 描述
-                .description("Providing solution for managing the vending machine, based on a frontend and backend architect, incorporating cloud service.")
+                .description("Providing solution for managing the vending machine, based on a frontend-backend architect, incorporating cloud services integration.")
                 // 作者信息
                 .contact(new Contact(ruoyiConfig.getName(), null, null))
                 // 版本

@@ -88,9 +88,10 @@ public class OperationDetailController extends BaseController
     @PreAuthorize("@ss.hasPermi('manage:operationDetail:add')")
     @Log(title = "Operation detail table", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody OperationDetail operationDetail)
+    public R<String> add(@RequestBody OperationDetail operationDetail)
     {
-        return toAjax(operationDetailService.insertOperationDetail(operationDetail));
+        operationDetailService.insertOperationDetail(operationDetail);
+        return R.ok();
     }
 
     /**
