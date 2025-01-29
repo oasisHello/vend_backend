@@ -113,9 +113,9 @@ public class SwaggerConfig
         // 用ApiInfoBuilder进行定制
         return new ApiInfoBuilder()
                 // 设置标题
-                .title("Vending Machine Management")
+                .title("Vendora")
                 // 描述
-                .description("Providing solution for managing the vending machine, based on a frontend-backend architect, incorporating cloud services integration.")
+                .description("An IOT project to provide solution for managing the vending machine, based on a frontend-backend architect, incorporating cloud services integration.")
                 // 作者信息
                 .contact(new Contact(ruoyiConfig.getName(), null, null))
                 // 版本
