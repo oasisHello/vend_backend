@@ -1,5 +1,8 @@
 package oasis.vend.web.controller.system;
 
+import oasis.vend.common.utils.file.FileUtils;
+import org.dromara.x.file.storage.core.FileInfo;
+import org.dromara.x.file.storage.core.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +40,8 @@ public class SysProfileController extends BaseController
 
     @Autowired
     private TokenService tokenService;
+    @Autowired
+    FileStorageService fileStorageService;
 
     /**
      * 个人信息
@@ -121,13 +126,18 @@ public class SysProfileController extends BaseController
         if (!file.isEmpty())
         {
             LoginUser loginUser = getLoginUser();
-            String avatar = FileUploadUtils.upload(RuoYiConfig.getAvatarPath(), file, MimeTypeUtils.IMAGE_EXTENSION);
-            if (userService.updateUserAvatar(loginUser.getUsername(), avatar))
+            FileInfo fileInfo = fileStorageService.of(file)
+                    .setPath(RuoYiConfig.getAvatarPath())//profile path
+                    .upload();
+            if (userService.updateUserAvatar(loginUser.getUsername(), fileInfo.getUrl()))
             {
                 AjaxResult ajax = AjaxResult.success();
-                ajax.put("imgUrl", avatar);
+                ajax.put("fileName", fileInfo.getUrl());
+                ajax.put("newFileName", FileUtils.getName(fileInfo.getUrl()));
+                ajax.put("originalFilename", fileInfo.getUrl());
+                ajax.put("imgUrl", fileInfo.getUrl());
                 // 更新缓存用户头像
-                loginUser.getUser().setAvatar(avatar);
+                loginUser.getUser().setAvatar(fileInfo.getUrl());
                 tokenService.setLoginUser(loginUser);
                 return ajax;
             }
