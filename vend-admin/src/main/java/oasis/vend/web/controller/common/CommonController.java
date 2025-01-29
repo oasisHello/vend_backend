@@ -120,11 +120,12 @@ public class CommonController
             for (MultipartFile file : files)
             {
                 // 上传并返回新文件名称
-                String fileName = FileUploadUtils.upload(filePath, file);
-                String url = serverConfig.getUrl() + fileName;
-                urls.add(url);
-                fileNames.add(fileName);
-                newFileNames.add(FileUtils.getName(fileName));
+                FileInfo fileInfo =fileStorageService.of(file)
+                        .setPath(filePath)
+                        .upload();
+                urls.add(fileInfo.getUrl());
+                fileNames.add(fileInfo.getUrl());
+                newFileNames.add(FileUtils.getName(fileInfo.getUrl()));
                 originalFilenames.add(file.getOriginalFilename());
             }
             AjaxResult ajax = AjaxResult.success();
