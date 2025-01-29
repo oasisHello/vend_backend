@@ -113,13 +113,13 @@ public class SwaggerConfig
         // 用ApiInfoBuilder进行定制
         return new ApiInfoBuilder()
                 // 设置标题
-                .title("Title: Vending Machine Management")
+                .title("Vending Machine Management")
                 // 描述
-                .description("Description: providing solution for managing the vending machine, based on a frontend and backend architect, incorporating cloud service.")
+                .description("Providing solution for managing the vending machine, based on a frontend and backend architect, incorporating cloud service.")
                 // 作者信息
                 .contact(new Contact(ruoyiConfig.getName(), null, null))
                 // 版本
-                .version("版本号:" + ruoyiConfig.getVersion())
+                .version("Version:" + ruoyiConfig.getVersion())
                 .build();
     }
 }
