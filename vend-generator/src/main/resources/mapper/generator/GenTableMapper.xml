@@ -84,11 +84,17 @@
 	</select>
 
 	<select id="selectDbTableList" parameterType="GenTable"
-		resultMap="GenTableResult"> select table_name, table_comment,
-		create_time, update_time from information_schema.tables where
-		table_schema = (select database()) AND table_name NOT LIKE 'qrtz\_%' AND
-		table_name NOT LIKE 'gen\_%' AND table_name NOT IN (select table_name
-		from gen_table) <if test="tableName != null and tableName != ''">
+			resultMap="GenTableResult">
+		select table_name, table_comment, create_time, update_time
+		from information_schema.tables
+		<!-- select current database-->
+		where table_schema = (select database())
+		<!-- exclude task scheduling part-->
+		AND table_name NOT LIKE 'qrtz\_%'
+		<!-- exclude gen_ part-->
+		AND table_name NOT LIKE 'gen\_%'
+		AND table_name NOT IN (select table_name from gen_table)
+		<if test="tableName != null and tableName != ''">
 			AND lower(table_name) like lower(concat('%', #{tableName}, '%'))
 		</if>
 		<if
