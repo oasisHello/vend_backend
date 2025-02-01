@@ -99,7 +99,9 @@
             #{aisle.vmId},
             #{aisle.innerCode},
             #{aisle.maxCapacity},
-            #{aisle.currentCapacity},
+            <!--current_capacity is equal to max_capacity at first-->
+            #{aisle.maxCapacity},
+
             #{aisle.lastSupplyTime},
             #{aisle.createTime},
             #{aisle.updateTime}
@@ -131,13 +133,28 @@
         delete from aisle where id = #{id}
     </delete>
 
-    <delete id="deleteAisleByIds" parameterType="String">delete from aisle
+    <delete id="deleteAisleByIds" parameterType="String">
+        delete from aisle
         where id in
         <foreach item="id" collection="array" open="(" separator=","
                  close=")">
             #{id}
         </foreach>
     </delete>
+
+    <update id="resetAisle" parameterType="Aisle">
+        UPDATE aisle
+        <trim prefix="SET" suffixOverrides=",">
+            <!--set goods to null(default)-->
+            goods_id = NULL,
+            max_capacity = #{maxCapacity},
+            <!--set the current capacity to default-->
+            current_capacity = #{maxCapacity},
+            update_time = #{updateTime}
+        </trim>
+        WHERE id = #{id}
+    </update>
+
     <!-- Goods IDで集計 -->
     <select id="countByGoodsId" resultType="int" parameterType="Long[]">
         SELECT COUNT(*)

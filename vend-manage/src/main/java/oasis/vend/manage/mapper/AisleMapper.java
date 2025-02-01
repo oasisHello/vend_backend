@@ -82,4 +82,10 @@ public interface AisleMapper {
 	 * @return
 	 */
     public List<AisleCustom> selectAisleCustomByInnerCode(String innerCode);
+
+	/**
+	 * reset the aisle to default
+	 * @return
+	 */
+	public int resetAisle(Aisle aisle);
 }

@@ -6,6 +6,9 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import oasis.vend.common.utils.DateUtils;
+import oasis.vend.manage.domain.custom.AisleCustom;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -121,9 +124,22 @@ public class AisleController extends BaseController
      */
     @ApiOperation(value = "Get AisleCustom list", notes = "Get the list of AisleCustom based on innerCode")
     @PreAuthorize("@ss.hasPermi('manage:aisle:list')")
-    @GetMapping(value = "/list/{innerCode}")
-    public AjaxResult getAisleCustomList(@PathVariable("innerCode") String innerCode)
+    @GetMapping(value = "/list_by_vmcode")
+    public TableDataInfo getAisleCustomList(Aisle aisle)
     {
-        return success(aisleService.selectAisleCustomByInnerCode(innerCode));
+        startPage();
+        List<AisleCustom>  aisleList = aisleService.selectAisleCustomByInnerCode(aisle.getInnerCode());
+        return getDataTable(aisleList);
     }
+
+    @ApiOperation(value = "Reset aisle", notes = "Reset the aisle to default")
+    @PreAuthorize("@ss.hasPermi('manage:aisle:edit')")
+    @Log(title = "Aisle Information", businessType = BusinessType.UPDATE)
+    @PutMapping(value = "/reset")
+    public AjaxResult reset(@RequestBody Aisle aisle)
+    {
+        aisle.setUpdateTime(DateUtils.getNowDate());
+        return toAjax(aisleService.resetAisle(aisle));
+    }
+
 }

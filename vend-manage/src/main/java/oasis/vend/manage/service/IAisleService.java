@@ -81,4 +81,10 @@ public interface IAisleService
      */
 
     public List<AisleCustom> selectAisleCustomByInnerCode(String innerCode);
+
+    /**
+     * reset the aisle to default
+     * @return int
+     */
+    public int resetAisle(Aisle aisle);
 }
