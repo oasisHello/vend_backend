@@ -14,7 +14,7 @@ import oasis.vend.generator.domain.GenTable;
 import oasis.vend.generator.domain.GenTableColumn;
 
 /**
- * 模板处理工具类
+ * Velocity Utilities
  * 
  * @author ruoyi
  */

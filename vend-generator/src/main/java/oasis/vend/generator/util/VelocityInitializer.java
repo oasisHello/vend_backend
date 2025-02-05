@@ -5,9 +5,9 @@ import org.apache.velocity.app.Velocity;
 import oasis.vend.common.constant.Constants;
 
 /**
- * VelocityEngine工厂
+ *  Velocity Initialization
  * 
- * @author ruoyi
+ * @author
  */
 public class VelocityInitializer
 {

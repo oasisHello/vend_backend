@@ -11,7 +11,7 @@ import oasis.vend.generator.domain.GenTableColumn;
 /**
  * 代码生成器 工具类
  * 
- * @author ruoyi
+ * @author oasis
  */
 public class GenUtils
 {
