@@ -1,101 +1,117 @@
 package oasis.vend.manage.controller;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import oasis.vend.common.annotation.Log;
 import oasis.vend.common.core.controller.BaseController;
-import oasis.vend.common.core.domain.AjaxResult;
-import oasis.vend.common.core.page.TableDataInfo;
+import oasis.vend.common.core.domain.R;
 import oasis.vend.common.enums.BusinessType;
-import oasis.vend.common.utils.poi.ExcelUtil;
 import oasis.vend.manage.domain.Location;
-import oasis.vend.manage.domain.custom.LocationCustom;
 import oasis.vend.manage.service.ILocationService;
+import oasis.vend.common.utils.poi.ExcelUtil;
+import oasis.vend.common.core.page.TableDataInfo;
 
 /**
  * locationController
- * 
- * @author ruoyi
- * @date 2024-12-23
+ *
+ * @author oasis
+ * @date 2025-02-08
  */
 @RestController
+@Api(tags="locationController")
 @RequestMapping("/manage/location")
-public class LocationController extends BaseController {
+public class LocationController extends BaseController
+{
 	@Autowired
 	private ILocationService locationService;
 
 	/**
-	 * 查询location列表
+	 * query location list
 	 */
+	@ApiOperation("query location list")
 	@PreAuthorize("@ss.hasPermi('manage:location:list')")
 	@GetMapping("/list")
-	public TableDataInfo list(Location location) {
+	public TableDataInfo list(Location location)
+	{
 		startPage();
-		List<LocationCustom> list = locationService.selectLocationCustomns(location);
+		List<Location> list = locationService.selectLocationList(location);
 		return getDataTable(list);
 	}
 
 	/**
-	 * 导出location列表
+	 * export location list
 	 */
+	@ApiOperation("export location list")
 	@PreAuthorize("@ss.hasPermi('manage:location:export')")
 	@Log(title = "location", businessType = BusinessType.EXPORT)
 	@PostMapping("/export")
-	public void export(HttpServletResponse response, Location location) {
+	public void export(HttpServletResponse response, Location location)
+	{
 		List<Location> list = locationService.selectLocationList(location);
 		ExcelUtil<Location> util = new ExcelUtil<Location>(Location.class);
 		util.exportExcel(response, list, "location数据");
 	}
 
 	/**
-	 * 获取location详细信息
+	 * retrieve location detailed info
 	 */
+	@ApiOperation("retrieve location detailed info")
 	@PreAuthorize("@ss.hasPermi('manage:location:query')")
 	@GetMapping(value = "/{id}")
-	public AjaxResult getInfo(@PathVariable("id") Long id) {
-		return success(locationService.selectLocationById(id));
+	public R<Location> getInfo(@PathVariable("id") Long id)
+	{
+
+		return R.ok(locationService.selectLocationById(id));
 	}
 
 	/**
-	 * 新增location
+	 * add location
 	 */
+	@ApiOperation("add location")
 	@PreAuthorize("@ss.hasPermi('manage:location:add')")
 	@Log(title = "location", businessType = BusinessType.INSERT)
 	@PostMapping
-	public AjaxResult add(@RequestBody Location location) {
-		return toAjax(locationService.insertLocation(location));
+	public R<String> add(@RequestBody Location location)
+	{
+		locationService.insertLocation(location);
+		return R.ok();
 	}
 
 	/**
-	 * 修改location
+	 * modify location
 	 */
+	@ApiOperation("modify location")
 	@PreAuthorize("@ss.hasPermi('manage:location:edit')")
 	@Log(title = "location", businessType = BusinessType.UPDATE)
 	@PutMapping
-	public AjaxResult edit(@RequestBody Location location) {
-		return toAjax(locationService.updateLocation(location));
+	public R<String> edit(@RequestBody Location location)
+	{
+		locationService.updateLocation(location);
+		return R.ok();
 	}
 
 	/**
-	 * 删除location
+	 * delete location
 	 */
+	@ApiOperation("delete location")
 	@PreAuthorize("@ss.hasPermi('manage:location:remove')")
 	@Log(title = "location", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
-	public AjaxResult remove(@PathVariable Long[] ids) {
-		return toAjax(locationService.deleteLocationByIds(ids));
+	public R<String> remove(@PathVariable Long[] ids)
+	{
+		locationService.deleteLocationByIds(ids);
+		return R.ok();
 	}
 }
