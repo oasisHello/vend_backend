@@ -109,10 +109,11 @@ public class GenController extends BaseController
      * 导入表结构（保存）
      */
     @PreAuthorize("@ss.hasPermi('tool:gen:import')")
-    @Log(title = "代码生成", businessType = BusinessType.IMPORT)
+    @Log(title = "【Code Auto Generating】", businessType = BusinessType.IMPORT)
     @PostMapping("/importTable")
     public AjaxResult importTableSave(String tables)
     {
+        // tables, to be imported to gen_table
         String[] tableNames = Convert.toStrArray(tables);
         // 查询表信息
         List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames);

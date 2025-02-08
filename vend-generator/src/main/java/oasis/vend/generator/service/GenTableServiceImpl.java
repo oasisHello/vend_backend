@@ -183,6 +183,7 @@ public class GenTableServiceImpl implements IGenTableService
                     List<GenTableColumn> genTableColumns = genTableColumnMapper.selectDbTableColumnsByName(tableName);
                     for (GenTableColumn column : genTableColumns)
                     {
+                        // set the column attribute
                         GenUtils.initColumnField(column, table);
                         genTableColumnMapper.insertGenTableColumn(column);
                     }
@@ -357,6 +358,7 @@ public class GenTableServiceImpl implements IGenTableService
             generatorCode(tableName, zip);
         }
         IOUtils.closeQuietly(zip);
+        // NOTE:what is the relationship between byte and stream ?
         return outputStream.toByteArray();
     }
 
@@ -365,11 +367,11 @@ public class GenTableServiceImpl implements IGenTableService
      */
     private void generatorCode(String tableName, ZipOutputStream zip)
     {
-        // 查询表信息
+        // Query table info
         GenTable table = genTableMapper.selectGenTableByName(tableName);
         // 设置主子表信息
         setSubTable(table);
-        // 设置主键列信息
+        // Ensure the table has pk.
         setPkColumn(table);
 
         VelocityInitializer.initVelocity();
@@ -380,7 +382,7 @@ public class GenTableServiceImpl implements IGenTableService
         List<String> templates = VelocityUtils.getTemplateList(table.getTplCategory(), table.getTplWebType());
         for (String template : templates)
         {
-            // 渲染模板
+            // render the template
             StringWriter sw = new StringWriter();
             Template tpl = Velocity.getTemplate(template, Constants.UTF8);
             tpl.merge(context, sw);
