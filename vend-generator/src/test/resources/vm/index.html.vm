@@ -7,5 +7,19 @@
 </head>
 <body>
     <h3>velocity learning...${message}</h3>
+
+## set variable
+#set($name="velocity")
+
+## export variable
+ 1.export:${name}<br>
+ 2.export:$name<br>
+ 3.joint:${name}Service<br>
+ <hr>
+ $generator <br>
+ generator id: ${generator.id}<br>
+ generator name: ${generator.name}<br>
+
+
 </body>
 </html>
