@@ -26,7 +26,7 @@ public class AsyncFactory
     private static final Logger sys_user_logger = LoggerFactory.getLogger("sys-user");
 
     /**
-     * 记录登录信息
+     * record the login info
      * 
      * @param username 用户名
      * @param status 状态
@@ -51,13 +51,13 @@ public class AsyncFactory
                 s.append(LogUtils.getBlock(username));
                 s.append(LogUtils.getBlock(status));
                 s.append(LogUtils.getBlock(message));
-                // 打印信息到日志
+                // print in console
                 sys_user_logger.info(s.toString(), args);
-                // 获取客户端操作系统
+                // Get the Operating System
                 String os = userAgent.getOperatingSystem().getName();
-                // 获取客户端浏览器
+                // Get the Browser
                 String browser = userAgent.getBrowser().getName();
-                // 封装对象
+                // Create system login info
                 SysLogininfor logininfor = new SysLogininfor();
                 logininfor.setUserName(username);
                 logininfor.setIpaddr(ip);

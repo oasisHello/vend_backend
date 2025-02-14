@@ -93,6 +93,7 @@ public class SysLoginService
         {
             AuthenticationContextHolder.clearContext();
         }
+        // async manager
         AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         recordLoginInfo(loginUser.getUserId());

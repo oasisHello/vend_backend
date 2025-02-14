@@ -11,7 +11,7 @@ import oasis.vend.common.utils.StringUtils;
 import oasis.vend.framework.security.context.PermissionContextHolder;
 
 /**
- * RuoYi首创 自定义权限实现，ss取自SpringSecurity首字母
+ * fine-grained(method) permission control
  * 
  * @author ruoyi
  */

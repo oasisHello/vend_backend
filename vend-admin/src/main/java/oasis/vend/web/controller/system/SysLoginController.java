@@ -83,7 +83,7 @@ public class SysLoginController
     }
 
     /**
-     * 获取路由信息
+     * retrieve routers
      * 
      * @return 路由信息
      */

@@ -28,6 +28,9 @@ public class AsyncManager
      */
     private AsyncManager(){}
 
+    /**
+     *  singleton
+     */
     private static AsyncManager me = new AsyncManager();
 
     public static AsyncManager me()

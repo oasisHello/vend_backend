@@ -179,7 +179,7 @@ public class SysMenuServiceImpl implements ISysMenuService
             {
                 router.setAlwaysShow(true);
                 router.setRedirect("noRedirect");
-                router.setChildren(buildMenus(cMenus));
+                router.setChildren(buildMenus(cMenus));// recursive
             }
             else if (isMenuFrame(menu))
             {
