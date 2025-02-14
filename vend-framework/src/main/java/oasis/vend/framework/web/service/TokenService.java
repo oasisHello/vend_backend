@@ -120,7 +120,7 @@ public class TokenService
 
         Map<String, Object> claims = new HashMap<>();
         claims.put(Constants.LOGIN_USER_KEY, token);
-        return createToken(claims);
+        return encryptToken(claims);
     }
 
     /**
@@ -174,7 +174,7 @@ public class TokenService
      * @param claims 数据声明
      * @return 令牌
      */
-    private String createToken(Map<String, Object> claims)
+    private String encryptToken(Map<String, Object> claims)
     {
         String token = Jwts.builder()
                 .setClaims(claims)

@@ -63,17 +63,17 @@ public class SysLoginService
      */
     public String login(String username, String password, String code, String uuid)
     {
-        // 验证码校验
+        // 1.Captcha Validation
         validateCaptcha(username, code, uuid);
-        // 登录前置校验
+        // 2. User Validation
         loginPreCheck(username, password);
-        // 用户验证
+        // 3. Authentication
         Authentication authentication = null;
         try
         {
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
             AuthenticationContextHolder.setContext(authenticationToken);
-            // 该方法会去调用UserDetailsServiceImpl.loadUserByUsername
+            //NOTE: UserDetailsServiceImpl.loadUserByUsername will be executed.
             authentication = authenticationManager.authenticate(authenticationToken);
         }
         catch (Exception e)
@@ -93,10 +93,12 @@ public class SysLoginService
         {
             AuthenticationContextHolder.clearContext();
         }
+        //4.login success(record in the log asynchronous)
         AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        //5.Update logged in user info.
         recordLoginInfo(loginUser.getUserId());
-        // 生成token
+        //6. Generate token(Redis update)
         return tokenService.createToken(loginUser);
     }
 
@@ -110,16 +112,20 @@ public class SysLoginService
      */
     public void validateCaptcha(String username, String code, String uuid)
     {
+        // check whether captcha enabled?
         boolean captchaEnabled = configService.selectCaptchaEnabled();
         if (captchaEnabled)
         {
             String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + StringUtils.nvl(uuid, "");
+            //captcha will be store in redis temporarily.
             String captcha = redisCache.getCacheObject(verifyKey);
+            //if captcha is null=> Captcha is expired.
             if (captcha == null)
             {
                 AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.jcaptcha.expire")));
                 throw new CaptchaExpireException();
             }
+            //NOTE? why delete the object
             redisCache.deleteObject(verifyKey);
             if (!code.equalsIgnoreCase(captcha))
             {
@@ -136,27 +142,27 @@ public class SysLoginService
      */
     public void loginPreCheck(String username, String password)
     {
-        // 用户名或密码为空 错误
+        // 1.User or password is empty ?
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password))
         {
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("not.null")));
             throw new UserNotExistsException();
         }
-        // 密码如果不在指定范围内 错误
+        // 2.check the password length
         if (password.length() < UserConstants.PASSWORD_MIN_LENGTH
                 || password.length() > UserConstants.PASSWORD_MAX_LENGTH)
         {
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
             throw new UserPasswordNotMatchException();
         }
-        // 用户名不在指定范围内 错误
+        // 3. check the username length
         if (username.length() < UserConstants.USERNAME_MIN_LENGTH
                 || username.length() > UserConstants.USERNAME_MAX_LENGTH)
         {
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("user.password.not.match")));
             throw new UserPasswordNotMatchException();
         }
-        // IP黑名单校验
+        // black ip list
         String blackStr = configService.selectConfigByKey("sys.login.blackIPList");
         if (IpUtils.isMatchedIp(blackStr, IpUtils.getIpAddr()))
         {

@@ -40,7 +40,7 @@ public class SysLoginController
     private TokenService tokenService;
 
     /**
-     * 登录方法
+     * login in
      * 
      * @param loginBody 登录信息
      * @return 结果
@@ -49,9 +49,10 @@ public class SysLoginController
     public AjaxResult login(@RequestBody LoginBody loginBody)
     {
         AjaxResult ajax = AjaxResult.success();
-        // 生成令牌
+        // generate token
         String token = loginService.login(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
                 loginBody.getUuid());
+        //
         ajax.put(Constants.TOKEN, token);
         return ajax;
     }
@@ -66,9 +67,9 @@ public class SysLoginController
     {
         LoginUser loginUser = SecurityUtils.getLoginUser();
         SysUser user = loginUser.getUser();
-        // 角色集合
+        //  user role collection
         Set<String> roles = permissionService.getRolePermission(user);
-        // 权限集合
+        //  permissions that user have
         Set<String> permissions = permissionService.getMenuPermission(user);
         if (!loginUser.getPermissions().equals(permissions))
         {
