@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import oasis.vend.common.core.domain.R;
 import oasis.vend.common.utils.DateUtils;
 import oasis.vend.manage.domain.custom.AisleCustom;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,12 +30,12 @@ import oasis.vend.common.utils.poi.ExcelUtil;
 import oasis.vend.common.core.page.TableDataInfo;
 
 /**
- * Aisle InformationController
+ * Aisle Controller
  *
  * @author oasis
  * @date 2025-01-07
  */
-@Api(tags = "Aisle Management")  // Tag for Knife4J API grouping
+@Api(tags = "aisle-controller")  // Tag for Knife4J API grouping
 @RestController
 @RequestMapping("/manage/aisle")
 public class AisleController extends BaseController
@@ -45,7 +46,7 @@ public class AisleController extends BaseController
     /**
      * Query Aisle Information List
      */
-    @ApiOperation(value = "Get aisle list", notes = "Retrieve the list of aisles")
+    @ApiOperation("retrieve aisle list")
     @PreAuthorize("@ss.hasPermi('manage:aisle:list')")
     @GetMapping("/list")
     public TableDataInfo list(Aisle aisle)
@@ -58,7 +59,7 @@ public class AisleController extends BaseController
     /**
      * Export Aisle Information List
      */
-    @ApiOperation(value = "Export aisle list", notes = "Export the aisle list as an Excel file")
+    @ApiOperation("export aisle list")
     @PreAuthorize("@ss.hasPermi('manage:aisle:export')")
     @Log(title = "Aisle Information", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -72,36 +73,38 @@ public class AisleController extends BaseController
     /**
      * Get Aisle Information Details
      */
-    @ApiOperation(value = "Get aisle details", notes = "Get detailed information of a specific aisle by ID")
+    @ApiOperation("retrieve aisle details")
     @PreAuthorize("@ss.hasPermi('manage:aisle:query')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
+    public R<Aisle> getInfo(@PathVariable("id") Long id)
     {
-        return success(aisleService.selectAisleById(id));
+        return R.ok(aisleService.selectAisleById(id));
     }
 
     /**
      * Add Aisle Information
      */
-    @ApiOperation(value = "Add new aisle", notes = "Add a new aisle information")
+    @ApiOperation("add new aisle")
     @PreAuthorize("@ss.hasPermi('manage:aisle:add')")
     @Log(title = "Aisle Information", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody Aisle aisle)
+    public R<Aisle> add(@RequestBody Aisle aisle)
     {
-        return toAjax(aisleService.insertAisle(aisle));
+        aisleService.insertAisle(aisle);
+        return R.ok();
     }
 
     /**
      * Edit Aisle Information
      */
-    @ApiOperation(value = "Edit aisle", notes = "Edit an existing aisle information")
+    @ApiOperation("modify aisle")
     @PreAuthorize("@ss.hasPermi('manage:aisle:edit')")
     @Log(title = "Aisle Information", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody Aisle aisle)
+    public R<String> edit(@RequestBody Aisle aisle)
     {
-        return toAjax(aisleService.updateAisle(aisle));
+        aisleService.updateAisle(aisle);
+        return R.ok();
     }
 
     /**
@@ -114,15 +117,16 @@ public class AisleController extends BaseController
     @PreAuthorize("@ss.hasPermi('manage:aisle:remove')")
     @Log(title = "Aisle Information", businessType = BusinessType.DELETE)
     @DeleteMapping("/{ids}")
-    public AjaxResult remove(@PathVariable Long[] ids)
+    public R<String> remove(@PathVariable Long[] ids)
     {
-        return toAjax(aisleService.deleteAisleByIds(ids));
+        aisleService.deleteAisleByIds(ids);
+        return R.ok();
     }
 
     /**
      * Get AisleCustom List
      */
-    @ApiOperation(value = "Get AisleCustom list", notes = "Get the list of AisleCustom based on innerCode")
+    @ApiOperation("retrieve aisle custom list")
     @PreAuthorize("@ss.hasPermi('manage:aisle:list')")
     @GetMapping(value = "/list_by_vmcode")
     public TableDataInfo getAisleCustomList(Aisle aisle)
@@ -132,14 +136,15 @@ public class AisleController extends BaseController
         return getDataTable(aisleList);
     }
 
-    @ApiOperation(value = "Reset aisle", notes = "Reset the aisle to default")
+    @ApiOperation("reset aisle")
     @PreAuthorize("@ss.hasPermi('manage:aisle:edit')")
     @Log(title = "Aisle Information", businessType = BusinessType.UPDATE)
     @PutMapping(value = "/reset")
-    public AjaxResult reset(@RequestBody Aisle aisle)
+    public R<String> reset(@RequestBody Aisle aisle)
     {
         aisle.setUpdateTime(DateUtils.getNowDate());
-        return toAjax(aisleService.resetAisle(aisle));
+        aisleService.resetAisle(aisle);
+        return R.ok();
     }
 
 }

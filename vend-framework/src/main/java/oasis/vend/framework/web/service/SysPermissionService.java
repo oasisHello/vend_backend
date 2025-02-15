@@ -35,8 +35,9 @@ public class SysPermissionService
      */
     public Set<String> getRolePermission(SysUser user)
     {
+        //NOTE: the reason to use set, instead of list, is that different role may share same permission
         Set<String> roles = new HashSet<String>();
-        // 管理员拥有所有权限
+        // the admin is permitted to access all menu.
         if (user.isAdmin())
         {
             roles.add("admin");

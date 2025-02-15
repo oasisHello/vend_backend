@@ -101,9 +101,9 @@ public class OperationDetailController extends BaseController
     @PreAuthorize("@ss.hasPermi('manage:operationDetail:edit')")
     @Log(title = "Operation detail table", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody OperationDetail operationDetail)
+    public R<String> edit(@RequestBody OperationDetail operationDetail)
     {
-        return toAjax(operationDetailService.updateOperationDetail(operationDetail));
+        return R.ok();
     }
 
     /**

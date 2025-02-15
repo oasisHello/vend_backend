@@ -2,8 +2,10 @@ package oasis.vend.manage.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import oasis.vend.common.core.domain.R;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.apache.catalina.security.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,19 +20,18 @@ import oasis.vend.common.core.controller.BaseController;
 import oasis.vend.common.core.domain.AjaxResult;
 import oasis.vend.common.enums.BusinessType;
 import oasis.vend.manage.domain.Vendor;
-import oasis.vend.manage.domain.custom.VendorCustom;
 import oasis.vend.manage.service.IVendorService;
-import oasis.vend.common.utils.SecurityUtils;
 import oasis.vend.common.utils.poi.ExcelUtil;
 import oasis.vend.common.core.page.TableDataInfo;
 
 /**
  * vendorController
- * 
+ *
  * @author oasis
- * @date 2024-12-23
+ * @date 2025-02-08
  */
 @RestController
+@Api(tags="vendorController")
 @RequestMapping("/manage/vendor")
 public class VendorController extends BaseController
 {
@@ -38,20 +39,22 @@ public class VendorController extends BaseController
     private IVendorService vendorService;
 
     /**
-     * 查询vendor列表
+     * query vendor list
      */
+    @ApiOperation("query vendor list")
     @PreAuthorize("@ss.hasPermi('manage:vendor:list')")
     @GetMapping("/list")
     public TableDataInfo list(Vendor vendor)
     {
         startPage();
-        List<VendorCustom> list = vendorService.selectVendorCustomList(vendor);
+        List<Vendor> list = vendorService.selectVendorList(vendor);
         return getDataTable(list);
     }
 
     /**
-     * 导出vendor列表
+     * export vendor list
      */
+    @ApiOperation("export vendor list")
     @PreAuthorize("@ss.hasPermi('manage:vendor:export')")
     @Log(title = "vendor", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
@@ -63,18 +66,20 @@ public class VendorController extends BaseController
     }
 
     /**
-     * 获取vendor详细信息
+     * retrieve vendor detailed info
      */
+    @ApiOperation("retrieve vendor detailed info")
     @PreAuthorize("@ss.hasPermi('manage:vendor:query')")
     @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
+    public R<Vendor> getInfo(@PathVariable("id") Long id)
     {
-        return success(vendorService.selectVendorById(id));
+        return R.ok(vendorService.selectVendorById(id));
     }
 
     /**
-     * 新增vendor
+     * add vendor
      */
+    @ApiOperation("add vendor")
     @PreAuthorize("@ss.hasPermi('manage:vendor:add')")
     @Log(title = "vendor", businessType = BusinessType.INSERT)
     @PostMapping
@@ -84,8 +89,9 @@ public class VendorController extends BaseController
     }
 
     /**
-     * 修改vendor
+     * modify vendor
      */
+    @ApiOperation("modify vendor")
     @PreAuthorize("@ss.hasPermi('manage:vendor:edit')")
     @Log(title = "vendor", businessType = BusinessType.UPDATE)
     @PutMapping
@@ -95,23 +101,14 @@ public class VendorController extends BaseController
     }
 
     /**
-     * 删除vendor
+     * delete vendor
      */
+    @ApiOperation("delete vendor")
     @PreAuthorize("@ss.hasPermi('manage:vendor:remove')")
     @Log(title = "vendor", businessType = BusinessType.DELETE)
-	@DeleteMapping("/{ids}")
+    @DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(vendorService.deleteVendorByIds(ids));
     }
-    @PreAuthorize("@ss.hasPermi('manage:vendor:edit')")
-    @Log(title = "vendor", businessType = BusinessType.UPDATE)
-    @PutMapping("resetPwd/{id}")
-	public AjaxResult resetPwd(@PathVariable Long id) {
-		Vendor vendor = new Vendor();
-		vendor.setId(id);
-		vendor.setPassword(SecurityUtils.encryptPassword("123456"));
-		
-		return toAjax(vendorService.updateVendor(vendor));// what does the Ajax meaning here ?
-	}
 }
