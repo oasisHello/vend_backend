@@ -32,9 +32,9 @@ import oasis.vend.framework.manager.factory.AsyncFactory;
 import oasis.vend.system.domain.SysOperLog;
 
 /**
- * 操作日志记录处理
+ * Log(AOP)
  * 
- * @author ruoyi
+ * @author oasis
  */
 @Aspect
 @Component
@@ -49,11 +49,12 @@ public class LogAspect
     private static final ThreadLocal<Long> TIME_THREADLOCAL = new NamedThreadLocal<Long>("Cost Time");
 
     /**
-     * 处理请求前执行
+     * do before log
      */
     @Before(value = "@annotation(controllerLog)")
     public void boBefore(JoinPoint joinPoint, Log controllerLog)
     {
+        //set the start time.
         TIME_THREADLOCAL.set(System.currentTimeMillis());
     }
 
@@ -80,11 +81,19 @@ public class LogAspect
         handleLog(joinPoint, controllerLog, e, null);
     }
 
+    /**
+     * handle the log
+     * @param joinPoint
+     * @param controllerLog
+     * @param e
+     * @param jsonResult
+     */
+
     protected void handleLog(final JoinPoint joinPoint, Log controllerLog, final Exception e, Object jsonResult)
     {
         try
         {
-            // 获取当前的用户
+            // get current user
             LoginUser loginUser = SecurityUtils.getLoginUser();
 
             // *========数据库日志=========*//
@@ -103,7 +112,7 @@ public class LogAspect
                     operLog.setDeptName(currentUser.getDept().getDeptName());
                 }
             }
-
+            // Exception occurs
             if (e != null)
             {
                 operLog.setStatus(BusinessStatus.FAIL.ordinal());
@@ -117,7 +126,7 @@ public class LogAspect
             operLog.setRequestMethod(ServletUtils.getRequest().getMethod());
             // 处理设置注解上的参数
             getControllerMethodDescription(joinPoint, controllerLog, operLog, jsonResult);
-            // 设置消耗时间
+            // spent time
             operLog.setCostTime(System.currentTimeMillis() - TIME_THREADLOCAL.get());
             // 保存数据库
             AsyncManager.me().execute(AsyncFactory.recordOper(operLog));

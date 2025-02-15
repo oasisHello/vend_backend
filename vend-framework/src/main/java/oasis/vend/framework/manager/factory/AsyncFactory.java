@@ -58,24 +58,24 @@ public class AsyncFactory
                 // Get the Browser
                 String browser = userAgent.getBrowser().getName();
                 // Create system login info
-                SysLogininfor logininfor = new SysLogininfor();
-                logininfor.setUserName(username);
-                logininfor.setIpaddr(ip);
-                logininfor.setLoginLocation(address);
-                logininfor.setBrowser(browser);
-                logininfor.setOs(os);
-                logininfor.setMsg(message);
+                SysLogininfor loginInfo = new SysLogininfor();
+                loginInfo.setUserName(username);
+                loginInfo.setIpaddr(ip);
+                loginInfo.setLoginLocation(address);
+                loginInfo.setBrowser(browser);
+                loginInfo.setOs(os);
+                loginInfo.setMsg(message);
                 // 日志状态
                 if (StringUtils.equalsAny(status, Constants.LOGIN_SUCCESS, Constants.LOGOUT, Constants.REGISTER))
                 {
-                    logininfor.setStatus(Constants.SUCCESS);
+                    loginInfo.setStatus(Constants.SUCCESS);
                 }
                 else if (Constants.LOGIN_FAIL.equals(status))
                 {
-                    logininfor.setStatus(Constants.FAIL);
+                    loginInfo.setStatus(Constants.FAIL);
                 }
-                // 插入数据
-                SpringUtils.getBean(ISysLogininforService.class).insertLogininfor(logininfor);
+                // Insert(IOC)
+                SpringUtils.getBean(ISysLogininforService.class).insertLogininfor(loginInfo);
             }
         };
     }
