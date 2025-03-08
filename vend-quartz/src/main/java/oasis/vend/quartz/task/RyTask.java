@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 import oasis.vend.common.utils.StringUtils;
 
 /**
- * 定时任务调度测试
+ * Quartz Test
  * 
- * @author ruoyi
+ * @author oasis
  */
 @Component("ryTask")
 public class RyTask
