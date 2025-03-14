@@ -34,6 +34,7 @@ public class ScheduleUtils
      */
     private static Class<? extends Job> getQuartzJobClass(SysJob sysJob)
     {
+        // 1. Concurrent is allowed ?
         boolean isConcurrent = "0".equals(sysJob.getConcurrent());
         return isConcurrent ? QuartzJobExecution.class : QuartzDisallowConcurrentExecution.class;
     }
@@ -60,16 +61,18 @@ public class ScheduleUtils
     public static void createScheduleJob(Scheduler scheduler, SysJob job) throws SchedulerException, TaskException
     {
         Class<? extends Job> jobClass = getQuartzJobClass(job);
-        // 构建job信息
+        // 1. Job Construction
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
+        //2. Job detail construction
         JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(getJobKey(jobId, jobGroup)).build();
 
         // 表达式调度构建器
         CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
+        // 3. resume policy
         cronScheduleBuilder = handleCronScheduleMisfirePolicy(job, cronScheduleBuilder);
 
-        // 按新的cronExpression表达式构建一个新的trigger
+        // 4. construct the trigger by cronExpression
         CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(getTriggerKey(jobId, jobGroup))
                 .withSchedule(cronScheduleBuilder).build();
 
@@ -83,14 +86,14 @@ public class ScheduleUtils
             scheduler.deleteJob(getJobKey(jobId, jobGroup));
         }
 
-        // 判断任务是否过期
+        // Task is expired?
         if (StringUtils.isNotNull(CronUtils.getNextExecution(job.getCronExpression())))
         {
             // 执行调度任务
             scheduler.scheduleJob(jobDetail, trigger);
         }
 
-        // 暂停任务
+        // Pause ? why ?
         if (job.getStatus().equals(ScheduleConstants.Status.PAUSE.getValue()))
         {
             scheduler.pauseJob(ScheduleUtils.getJobKey(jobId, jobGroup));

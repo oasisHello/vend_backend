@@ -166,7 +166,7 @@ public class Constants
     public static final String[] JOB_WHITELIST_STR = { "oasis.vend.quartz.task" };
 
     /**
-     * 定时任务违规的字符
+     * schedule job violation char
      */
     public static final String[] JOB_ERROR_STR = { "java.net.URL", "javax.naming.InitialContext", "org.yaml.snakeyaml",
             "org.springframework", "org.apache", "oasis.vend.common.utils.file", "oasis.vend.common.config", "oasis.vend.generator" };
