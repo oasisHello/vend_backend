@@ -19,7 +19,7 @@ import oasis.vend.common.utils.spring.SpringUtils;
 import oasis.vend.quartz.domain.SysJob;
 
 /**
- * 定时任务工具类
+ * Schedule Utils
  * 
  * @author ruoyi
  *

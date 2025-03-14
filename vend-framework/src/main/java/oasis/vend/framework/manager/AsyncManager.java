@@ -7,31 +7,23 @@ import oasis.vend.common.utils.Threads;
 import oasis.vend.common.utils.spring.SpringUtils;
 
 /**
- * 异步任务管理器
+ * Async Task Manager
  * 
  * @author ruoyi
  */
 public class AsyncManager
 {
-    /**
-     * 操作延迟10毫秒
-     */
-    private final int OPERATE_DELAY_TIME = 10;
 
     /**
-     * 异步操作任务调度线程池
+     * Thread Pool Service(by IOC)
      */
-    private ScheduledExecutorService executor = SpringUtils.getBean("scheduledExecutorService");
-
-    /**
-     * 单例模式
-     */
-    private AsyncManager(){}
+    private final ScheduledExecutorService executor = SpringUtils.getBean("scheduledExecutorService");
 
     /**
      *  singleton
      */
-    private static AsyncManager me = new AsyncManager();
+    private AsyncManager(){}
+    private static final AsyncManager me = new AsyncManager();
 
     public static AsyncManager me()
     {
@@ -39,12 +31,14 @@ public class AsyncManager
     }
 
     /**
-     * 执行任务
+     * execute task
      * 
-     * @param task 任务
+     * @param task task
      */
     public void execute(TimerTask task)
     {
+        // 10ms delay
+        int OPERATE_DELAY_TIME = 10;
         executor.schedule(task, OPERATE_DELAY_TIME, TimeUnit.MILLISECONDS);
     }
 
