@@ -60,39 +60,44 @@ public class ScheduleUtils
     public static void createScheduleJob(Scheduler scheduler, SysJob job) throws SchedulerException, TaskException
     {
         Class<? extends Job> jobClass = getQuartzJobClass(job);
-        // 构建job信息
+        // 1. construct job and job detail
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
         JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(getJobKey(jobId, jobGroup)).build();
 
-        // 表达式调度构建器
+        // 2.1 cronScheduleBuilder Construction
         CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
+        // 2.2 resume policy
         cronScheduleBuilder = handleCronScheduleMisfirePolicy(job, cronScheduleBuilder);
 
-        // 按新的cronExpression表达式构建一个新的trigger
-        CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(getTriggerKey(jobId, jobGroup))
+        // 3. construct a trigger by cronExpression
+        CronTrigger trigger = TriggerBuilder.newTrigger().
+                // bind with Job
+                withIdentity(getTriggerKey(jobId, jobGroup))
+                // bind with schedule
                 .withSchedule(cronScheduleBuilder).build();
 
-        // 放入参数，运行时的方法可以获取
+        // 4. set job into job detail
         jobDetail.getJobDataMap().put(ScheduleConstants.TASK_PROPERTIES, job);
 
-        // 判断是否存在
+        // 5. if exists
         if (scheduler.checkExists(getJobKey(jobId, jobGroup)))
         {
-            // 防止创建时存在数据问题 先移除，然后在执行创建操作
+            // 5.1  防止创建时存在数据问题先移除，然后在执行创建操作
             scheduler.deleteJob(getJobKey(jobId, jobGroup));
         }
 
-        // 判断任务是否过期
+        // 6. Is expired ?
         if (StringUtils.isNotNull(CronUtils.getNextExecution(job.getCronExpression())))
         {
-            // 执行调度任务
+            // 6.1 put the job detail into the scheduler(
             scheduler.scheduleJob(jobDetail, trigger);
         }
 
-        // 暂停任务
+        // 7. If the status needs to be paused.
         if (job.getStatus().equals(ScheduleConstants.Status.PAUSE.getValue()))
         {
+            //pause
             scheduler.pauseJob(ScheduleUtils.getJobKey(jobId, jobGroup));
         }
     }

@@ -4,9 +4,9 @@ import java.util.Locale;
 import io.jsonwebtoken.Claims;
 
 /**
- * 通用常量信息
+ * common constant
  * 
- * @author ruoyi
+ * @author oasis
  */
 public class Constants
 {
@@ -141,7 +141,8 @@ public class Constants
     public static final String RESOURCE_PREFIX = "/profile";
 
     /**
-     * RMI 远程方法调用
+     * RMI(Remote Method Invocation)a
+     * Definition: Object residing in one JVM to invoke methods on an object in another JVM.
      */
     public static final String LOOKUP_RMI = "rmi:";
 
