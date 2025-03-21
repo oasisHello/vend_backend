@@ -63,18 +63,16 @@ public class ScheduleUtils
         // 1. construct job and job detail
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
+        //2. Job detail construction
         JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(getJobKey(jobId, jobGroup)).build();
 
         // 2.1 cronScheduleBuilder Construction
         CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
-        // 2.2 resume policy
+        // 3. resume policy
         cronScheduleBuilder = handleCronScheduleMisfirePolicy(job, cronScheduleBuilder);
 
-        // 3. construct a trigger by cronExpression
-        CronTrigger trigger = TriggerBuilder.newTrigger().
-                // bind with Job
-                withIdentity(getTriggerKey(jobId, jobGroup))
-                // bind with schedule
+        // 4. construct the trigger by cronExpression
+        CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(getTriggerKey(jobId, jobGroup))
                 .withSchedule(cronScheduleBuilder).build();
 
         // 4. set job into job detail
@@ -83,10 +81,11 @@ public class ScheduleUtils
         // 5. if exists
         if (scheduler.checkExists(getJobKey(jobId, jobGroup)))
         {
-            // 5.1  防止创建时存在数据问题先移除，然后在执行创建操作
+            // 防止创建时存在数据问题 先移除，然后在执行创建操作
             scheduler.deleteJob(getJobKey(jobId, jobGroup));
         }
 
+        // Task is expired?
         // 6. Is expired ?
         if (StringUtils.isNotNull(CronUtils.getNextExecution(job.getCronExpression())))
         {
