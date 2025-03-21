@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import oasis.vend.common.annotation.Log;
-import oasis.vend.common.config.RuoYiConfig;
+import oasis.vend.common.config.VendoraConfig;
 import oasis.vend.common.core.controller.BaseController;
 import oasis.vend.common.core.domain.AjaxResult;
 import oasis.vend.common.core.domain.entity.SysUser;
@@ -21,8 +21,6 @@ import oasis.vend.common.core.domain.model.LoginUser;
 import oasis.vend.common.enums.BusinessType;
 import oasis.vend.common.utils.SecurityUtils;
 import oasis.vend.common.utils.StringUtils;
-import oasis.vend.common.utils.file.FileUploadUtils;
-import oasis.vend.common.utils.file.MimeTypeUtils;
 import oasis.vend.framework.web.service.TokenService;
 import oasis.vend.system.service.ISysUserService;
 
@@ -127,7 +125,7 @@ public class SysProfileController extends BaseController
         {
             LoginUser loginUser = getLoginUser();
             FileInfo fileInfo = fileStorageService.of(file)
-                    .setPath(RuoYiConfig.getAvatarPath())//profile path
+                    .setPath(VendoraConfig.getAvatarPath())//profile path
                     .upload();
             if (userService.updateUserAvatar(loginUser.getUsername(), fileInfo.getUrl()))
             {

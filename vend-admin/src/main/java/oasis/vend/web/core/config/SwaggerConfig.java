@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import oasis.vend.common.config.RuoYiConfig;
+import oasis.vend.common.config.VendoraConfig;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.auth.In;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -32,7 +32,7 @@ public class SwaggerConfig
 {
     /** 系统基础配置 */
     @Autowired
-    private RuoYiConfig ruoyiConfig;
+    private VendoraConfig vendoraConfig;
 
     /** 是否开启swagger */
     @Value("${swagger.enabled}")
@@ -117,9 +117,9 @@ public class SwaggerConfig
                 // 描述
                 .description("An IOT project to provide solution for managing the vending machine, based on a frontend-backend architect, incorporating cloud services integration.")
                 // 作者信息
-                .contact(new Contact(ruoyiConfig.getName(), null, null))
+                .contact(new Contact(vendoraConfig.getName(), null, null))
                 // 版本
-                .version("Version:" + ruoyiConfig.getVersion())
+                .version("Version:" + vendoraConfig.getVersion())
                 .build();
     }
 }

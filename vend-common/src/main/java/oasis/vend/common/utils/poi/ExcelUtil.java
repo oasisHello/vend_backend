@@ -74,7 +74,7 @@ import oasis.vend.common.annotation.Excel;
 import oasis.vend.common.annotation.Excel.ColumnType;
 import oasis.vend.common.annotation.Excel.Type;
 import oasis.vend.common.annotation.Excels;
-import oasis.vend.common.config.RuoYiConfig;
+import oasis.vend.common.config.VendoraConfig;
 import oasis.vend.common.core.domain.AjaxResult;
 import oasis.vend.common.core.text.Convert;
 import oasis.vend.common.exception.UtilException;
@@ -1459,7 +1459,7 @@ public class ExcelUtil<T>
      */
     public String getAbsoluteFile(String filename)
     {
-        String downloadPath = RuoYiConfig.getDownloadPath() + filename;
+        String downloadPath = VendoraConfig.getDownloadPath() + filename;
         File desc = new File(downloadPath);
         if (!desc.getParentFile().exists())
         {
