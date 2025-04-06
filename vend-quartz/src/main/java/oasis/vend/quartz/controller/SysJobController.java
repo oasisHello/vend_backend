@@ -84,27 +84,27 @@ public class SysJobController extends BaseController
     {
         if (!CronUtils.isValid(job.getCronExpression()))
         {
-            return error("新增任务'" + job.getJobName() + "'失败，Cron表达式不正确");
+            return error("adding job'" + job.getJobName() + "'failed: Cron expression is invalid.");
         }
         else if (StringUtils.containsIgnoreCase(job.getInvokeTarget(), Constants.LOOKUP_RMI))
         {
-            return error("新增任务'" + job.getJobName() + "'失败，目标字符串不允许'rmi'调用");
+            return error("adding job'" + job.getJobName() + "'failed，目标字符串不允许'rmi'调用");
         }
         else if (StringUtils.containsAnyIgnoreCase(job.getInvokeTarget(), new String[] { Constants.LOOKUP_LDAP, Constants.LOOKUP_LDAPS }))
         {
-            return error("新增任务'" + job.getJobName() + "'失败，目标字符串不允许'ldap(s)'调用");
+            return error("adding job'" + job.getJobName() + "'失败，目标字符串不允许'ldap(s)'调用");
         }
         else if (StringUtils.containsAnyIgnoreCase(job.getInvokeTarget(), new String[] { Constants.HTTP, Constants.HTTPS }))
         {
-            return error("新增任务'" + job.getJobName() + "'失败，目标字符串不允许'http(s)'调用");
+            return error("adding job'" + job.getJobName() + "'失败，目标字符串不允许'http(s)'调用");
         }
         else if (StringUtils.containsAnyIgnoreCase(job.getInvokeTarget(), Constants.JOB_ERROR_STR))
         {
-            return error("新增任务'" + job.getJobName() + "'失败，目标字符串存在违规");
+            return error("adding job'" + job.getJobName() + "'失败，目标字符串存在违规");
         }
         else if (!ScheduleUtils.whiteList(job.getInvokeTarget()))
         {
-            return error("新增任务'" + job.getJobName() + "'失败，目标字符串不在白名单内");
+            return error("adding job'" + job.getJobName() + "'failed. Target is not on the white list.");
         }
         job.setCreateBy(getUsername());
         return toAjax(jobService.insertJob(job));

@@ -22,9 +22,13 @@ public class JobInvokeUtil
      */
     public static void invokeMethod(SysJob sysJob) throws Exception
     {
+        // 1. retrieve the target, like, Class.methodName(params)
         String invokeTarget = sysJob.getInvokeTarget();
+        // 2. get the class name
         String beanName = getBeanName(invokeTarget);
+        // 3. get the method name
         String methodName = getMethodName(invokeTarget);
+        // 4. get the params
         List<Object[]> methodParams = getMethodParams(invokeTarget);
 
         if (!isValidClassName(beanName))

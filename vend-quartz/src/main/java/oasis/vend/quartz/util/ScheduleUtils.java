@@ -63,11 +63,12 @@ public class ScheduleUtils
         // 1. construct job and job detail
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
-        //2. Job detail construction
+        // 2. Job detail construction
         JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(getJobKey(jobId, jobGroup)).build();
 
         // 2.1 cronScheduleBuilder Construction
         CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
+
         // 3. resume policy
         cronScheduleBuilder = handleCronScheduleMisfirePolicy(job, cronScheduleBuilder);
 
